@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title>简报系统</title>
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+   <!--  <link rel="shortcut icon" th:href="@{/static/ico/favicon.ico}">
+    <link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/static/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+    <link th:href="@{/static/css/custom.css}" rel="stylesheet">
+    <link th:href="@{/css/style.new.css}" rel="stylesheet"> -->
+    
+    <link rel="shortcut icon" th:href="@{/ico/favicon.ico}"></link>
+    <link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet"></link>
+    <link th:href="@{/css/font-awesome.min.css?v=4.4.0}" rel="stylesheet"></link>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet"></link>
+    <link th:href="@{/css/custom.css}" rel="stylesheet"></link>
+    <link th:href="@{/css/style.new.css}" rel="stylesheet"></link>
+
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+
+    <div id="wrapper">
+
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation" th:fragment="menu">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <p class="d-block align-center">
+                                <img class="img-circle" th:src="@{/images/logo.png}"/>
+                            </p>
+                            <p class="d-block pt-sm align-center">
+                                <img th:src="@{/images/logo-text.png}"/>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="J_menuItem d-flex justify-start" href="bhf-dashboard.html">
+                            <img th:src="@{/icon/menu-dashboard@16px.png}">
+                            <span class="d-flex-item plr-xs">工作台</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+              
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1" th:fragment="main-page">
+    
+        </div>
+     
+       
+    </div>
+
+</body>
+</html>
+
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/plugins/layer/layer.min.js}"></script>
+
+<!-- 自定义js -->
+<script th:src="@{/js/hplus.js?v=4.1.0}"></script>
+<script type="text/javascript" th:src="@{/js/contabs.js}"></script>
+
+<!-- 第三方插件 -->
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+<!-- 
+<script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/static/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/static/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/static/js/plugins/layer/layer.min.js}"></script>
+
+
+<script th:src="@{/static/js/hplus.js?v=4.1.0}"></script>
+<script type="text/javascript" th:src="@{/static/js/contabs.js}"></script>
+
+<script th:src="@{/static/js/plugins/pace/pace.min.js}"></script>
+ -->

@@ -1,0 +1,130 @@
+.image-viewer {
+
+}
+.iv-box {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.iv-pre, .iv-next {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: url(../images/icon-row.png) no-repeat 0 0px;
+    cursor: pointer;
+    margin: auto 1rem;
+    top: 50%;
+    bottom: 50%;
+    z-index: 10;
+}
+.iv-next {
+    background-position: 0px -32px;
+    right: 0;
+}
+.iv-pre {
+    left: 0;
+}
+.iv-pre:hover, .iv-next:hover {
+    opacity: .85;
+}
+
+.iv-length{
+    position: absolute;
+    box-sizing: content-box;
+    width: calc(100% - 16px);
+    padding: 8px;
+    bottom: 116px;
+    text-align: right;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+.iv-length .name{
+    float: left;
+}
+
+.iv-queue{
+    display: block;
+    position: relative;
+    margin: 0 -6px;
+}
+
+.iv-queue .iv-pre, .iv-queue .iv-next{
+    position: absolute;
+    border-radius: 0;
+    border: 0 !important;
+    width: 32px;
+    height: 100px;
+    cursor: pointer;
+    top: 0;
+    margin: 6px;
+    bottom: 0;
+    z-index: 10;
+}
+.iv-queue .iv-pre{
+    background: rgba(0, 0, 0, .5) url(../images/icon-row-left-white.png) center center no-repeat;;
+}
+.iv-queue .iv-next{
+    background: rgba(0, 0, 0, .5) url(../images/icon-row-right-white.png) center center no-repeat;;
+}
+
+.iv-browser {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.iv-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    box-sizing:border-box;
+}
+
+.iv-image-show {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.iv-image-queue {
+    width: 18%;
+    display: inline-block;
+    position: relative;
+    margin: 1%;
+}
+
+.iv-image-queue .iv-image{
+    border: 1px solid darkgrey;
+}
+
+.iv-remove{
+    color: #FFFFFF;
+    background: #6c757d;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: block;
+    line-height: 1rem;
+    text-align: center;
+    position: absolute;
+    right: -.5rem;
+    font-style: normal;
+    top: -.5rem;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.iv-remove:hover{
+    opacity: .65
+}
