@@ -3,9 +3,11 @@
  */
 package com.lypz.briefreport.config;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.lypz.briefreport.commom.filter.AppInterceptor;
 
 /**
  * <B>系统名称：</B><BR>
@@ -18,18 +20,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 /**
  * @Author: Eric
  **/
-@Configuration
-public class WebMvcConfig extends WebMvcConfigurationSupport {
+// @SuppressWarnings("deprecation")
+// @Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+
+	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+			"classpath:/META-INF/resources/", "classpath:/resources/",
+			"classpath:/static/", "classpath:/public/" };
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new AppInterceptor()).addPathPatterns("/**")
+				.excludePathPatterns("");
+	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// 将templates目录下的CSS、JS文件映射为静态资源，防止Spring把这些资源识别成thymeleaf模版
-		registry.addResourceHandler("/templates/**.js").addResourceLocations(
-				"classpath:/templates/");
-		registry.addResourceHandler("/templates/**.css").addResourceLocations(
-				"classpath:/templates/");
-		// 其他静态资源
+		// 配置server虚拟路径，handler为页面中访问的目录，locations为files相对应的本地路径
 		registry.addResourceHandler("/static/**").addResourceLocations(
-				"classpath:/static/");
+				CLASSPATH_RESOURCE_LOCATIONS);
 	}
+
 }

@@ -17,10 +17,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.lypz.briefreport.commom.handle.ExceptionHandle;
 
 /**
  * <B>系统名称：</B><BR>
@@ -32,9 +33,10 @@ import org.apache.logging.log4j.Logger;
  * @since 2019年11月29日
  */
 //
-@WebFilter(filterName = "loginfilter", urlPatterns = "/*", initParams = {})
+@WebFilter(filterName = "myFilter", urlPatterns = "/*", initParams = {})
 public class myFilter implements Filter {
-	private static final Logger logger = LogManager.getLogger(myFilter.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(ExceptionHandle.class);
 
 	/**
 	 * <B>方法名称：</B><BR>
@@ -43,6 +45,7 @@ public class myFilter implements Filter {
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
 
+	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 
@@ -54,21 +57,23 @@ public class myFilter implements Filter {
 	 *      javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	 */
 
+	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		// 设置跨域
-		this.allowOrigin(response);
+		// this.allowOrigin(response);
 		try {
-
-			HttpServletResponseWrapper httpResponse = new HttpServletResponseWrapper(
-					response);
-			String path = request.getServletPath();// 请求路径
-			path = path.replace("/mq-pay-dev", "");
-			path = path.replace("/mq-pay-pre", "");
-			path = path.replace("/mq-pay", "");
-			request.getRequestDispatcher(path).forward(request, response);
+			chain.doFilter(request, response);
+			// HttpServletResponseWrapper httpResponse = new
+			// HttpServletResponseWrapper(
+			// response);
+			// String path = request.getServletPath();// 请求路径
+			// path = path.replace("/mq-pay-dev", "");
+			// path = path.replace("/mq-pay-pre", "");
+			// path = path.replace("/mq-pay", "");
+			// request.getRequestDispatcher(path).forward(request, response);
 
 		} catch (Exception e) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -86,6 +91,7 @@ public class myFilter implements Filter {
 	 * 
 	 * @see javax.servlet.Filter#destroy()
 	 */
+	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 
