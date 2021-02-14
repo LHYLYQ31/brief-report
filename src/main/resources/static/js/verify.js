@@ -11,8 +11,9 @@ var verifyTableColumns = [];
 
 var verifyTableData = [];
 
-layui.use('table', function(){
+layui.use(['table', 'laytpl'], function(){
     var table = layui.table;
+    var templet = layui.laytpl;
 
     var columns = [];
 
@@ -382,6 +383,34 @@ function __readyTooltips() {
 }
 
 function __verifyPhotosViewer() {
+
+    var verifyBaosongPhotoView = new Swiper('[data-swiper="verify-baosong-photo-view"]', {
+        autoplay: false,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+    console.log('this.verifyBaosongPhotoView---------->', verifyBaosongPhotoView);
+
+    var verifyMarkerPhotoView = new Swiper('[data-swiper="verify-marker-photo-view"]', {
+        autoplay: false,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+    console.log('this.verifyMarkerPhotoView---------->', verifyMarkerPhotoView);
+
+
     var imageArray = [
         "images/books/img-02.png",
         "images/books/img-03.png",

@@ -240,33 +240,21 @@ u{ text-decoration: none; }
 .justify-end {/* 终点对齐 */
     justify-content: flex-end;
     -webkit-align-items: flex-end;
-    -moz-align-items: flex-end;
-    -ms-align-items: flex-end;
-    -o-align-items: flex-end;
     align-items: flex-end;
 }
 .justify-center {/* 居中对齐 */
     justify-content: center;
     -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    -o-align-items:center;
     align-items: center;
 }
 .justify-between { /* 两端对齐 */
     justify-content: space-between;
     -webkit-align-items: space-between;
-    -moz-align-items: space-between;
-    -ms-align-items: space-between;
-    -o-align-items: space-between;
     align-items: space-between;
 }
 .justify-around {/* 等宽对齐 */
     justify-content: space-around;
     -webkit-align-items: space-around;
-    -moz-align-items: space-around;
-    -ms-align-items: space-around;
-    -o-align-items: space-around;
     align-items: space-around;
 }
 

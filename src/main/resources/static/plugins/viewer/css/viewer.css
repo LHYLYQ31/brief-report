@@ -99,6 +99,7 @@
 
 .iv-image-queue {
     width: 18%;
+    height: 100px !important;
     display: inline-block;
     position: relative;
     margin: 1%;

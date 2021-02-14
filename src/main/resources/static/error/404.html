@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,12 +11,12 @@
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 
-    <link rel="shortcut icon" th:href="@{/static/ico/favicon.ico}"> 
-    <link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
-    <link th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"> 
+    <link  th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link  th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
 
-    <link th:href="@{/css/animate.css}" rel="stylesheet">
-    <link th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+    <link  th:href="@{/css/animate.css}" rel="stylesheet">
+    <link  th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
 
 </head>
 
@@ -24,7 +26,7 @@
     <div class="middle-box text-center animated fadeInDown">
         <h1>404</h1>
         <h3 class="font-bold">页面未找到！</h3>
-		<h1><img alt="" th:src="@{/images/logo.png}"></h1>
+
         <div class="error-desc">
             抱歉，页面好像去火星了~
             <form class="form-inline m-t" role="form">
@@ -37,10 +39,10 @@
     </div>
 
     <!-- 全局js -->
-    <script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
-    <script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+    <script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+    <script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
 
-    <script type="text/javascript" th:src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
     <!--统计代码，可删除-->
 
 </body>

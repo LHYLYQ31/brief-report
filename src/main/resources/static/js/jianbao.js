@@ -231,23 +231,45 @@ $(function () {
         $('[data-change="baosong"]').show();
     });
 
-    $('[data-menu="jianbao"] a').click(function () {
-        $('[data-menu="jianbao"] a').removeClass('active');
-        $(this).addClass('active');
-        jianbaoType = $(this).data('type');
-        console.log('this.jianbaoType---------->', jianbaoType);
-        $('[data-table="baosong"], [data-table="fankui"], [data-table="tongji"]').hide();
-        if (jianbaoType === 1){
-            $('[data-table="baosong"]').show();
-        } else if (jianbaoType === 2){
-            $('[data-table="fankui"]').show();
-        } else {
-            $('[data-table="tongji"]').show();
-            __baosongNumberReports();
-            __baosongAcceptReports();
-        }
-        $('[data-title="table"]').text($(this).text());
-    });
+    // type
+    console.log('this.type---------->', getUrlParam('type'));
+    jianbaoType = JSON.parse(getUrlParam('type'));
+    if (jianbaoType === 1){
+        $('[data-table="baosong"]').show();
+        $('[data-table="fankui"]').hide();
+        $('[data-table="tongji"]').hide();
+    } else if (jianbaoType === 2){
+        $('[data-table="baosong"]').hide();
+        $('[data-table="fankui"]').show();
+        $('[data-table="tongji"]').hide();
+    } else {
+        $('[data-table="baosong"]').hide();
+        $('[data-table="fankui"]').hide();
+        $('[data-table="tongji"]').show();
+        __baosongNumberReports();
+        __baosongAcceptReports();
+    }
+
+    // $('[data-menu="jianbao"] a').click(function () {
+    //     $('[data-menu="jianbao"] a').removeClass('active');
+    //     $(this).addClass('active');
+    //     jianbaoType = $(this).data('type');
+    //     console.log('this.jianbaoType---------->', jianbaoType);
+    //     $('[data-table="baosong"], [data-table="fankui"], [data-table="tongji"]').hide();
+    //     if (jianbaoType === 1){
+    //         $('[data-table="baosong"]').show();
+    //     } else if (jianbaoType === 2){
+    //         $('[data-table="fankui"]').show();
+    //     } else {
+    //         $('[data-table="tongji"]').show();
+    //         __baosongNumberReports();
+    //         __baosongAcceptReports();
+    //     }
+    //     $('[data-title="table"]').text($(this).text());
+    // });
+
+
+
 
     $('[data-show-sharch="baosong"]').click(function () {
         $('[data-search="baosong"]').show();
