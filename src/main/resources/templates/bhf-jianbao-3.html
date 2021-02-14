@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>广西省边海防系统</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="plugins/kindeditor/themes/default/default.css">
+
+    <link href="plugins/zui/css/zui.min.css" rel="stylesheet">
+    <link href="plugins/zui/lib/chosen/chosen.min.css" rel="stylesheet">
+
+    <link href="plugins/layui/css/layui.css" rel="stylesheet">
+
+    <link href="plugins/ztree/css/ztree.css" rel="stylesheet">
+
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/style.new.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-2 d-none">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>简报系统</h5>
+                </div>
+                <div class="ibox-content">
+                    <div data-menu="jianbao" class="d-block">
+                        <a data-type="1" class="d-block p-sm active">报送管理</a>
+                        <a data-type="2" class="d-block p-sm">采用反馈</a>
+                        <a data-type="3" class="d-block p-sm">统计报表</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 data-title="table">报送管理</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div data-table="baosong" class="d-block">
+                        <div class="d-flex justify-start mb-lg">
+                            <div class="d-flex-item">
+                                <div data-sort="baosong" class="d-block">
+                                    <button data-switch="baosong" data-type="1" class="btn btn-success">已报送</button>
+                                    <button data-switch="baosong" data-type="2" class="btn btn-default">待报送</button>
+                                </div>
+                                <div data-search="baosong" class="d-flex justify-start" style="display: none;">
+                                    <a data-hide="baosong-search" class="d-block mr-ns">
+                                        <img alt="" src="icon/clear-red@16px.png"/>
+                                    </a>
+                                    <div class="d-block plr-xs width-120">
+                                        <input type="text" class="form-control" placeholder="上报人姓名">
+                                    </div>
+                                    <div class="d-block plr-xs width-120">
+                                        <input type="text" class="form-control" placeholder="报送标题">
+                                    </div>
+                                    <div class="d-block width-90 ml-ns">
+                                        <input type="text" class="form-control form-date" placeholder="起始时间">
+                                    </div>
+                                    <span class="d-block">～</span>
+                                    <div class="d-block width-90 mr-ns">
+                                        <input type="text" class="form-control form-date" placeholder="截止时间">
+                                    </div>
+                                    <div class="d-block plr-xs width-120">
+                                        <select class="chosen-select form-control" data-placeholder="采用情况">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-block plr-xs width-120">
+                                        <select class="chosen-select form-control" data-placeholder="信息类型">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-block">
+                                <button data-show-sharch="baosong" class="btn btn-icons btn-warning">
+                                    <img alt="" src="icon/search-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="搜索"/>
+                                </button>
+                                <button data-btn="change-baosong" class="btn btn-icons btn-primary">
+                                    <img alt="" src="icon/plus-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="添加"/>
+                                </button>
+                                <button class="btn btn-icons btn-success" data-toggle="modal" data-target="#selectPersonnel">
+                                    <img alt="" src="icon/share-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="分享"/>
+                                </button>
+                                <button data-btn="delete-all" class="btn btn-icons btn-danger">
+                                    <img alt="" src="icon/delete-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="删除"/>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-block">
+                            <table id="dataTable-baosong" lay-filter="dataTableFilter-baosong"></table>
+                        </div>
+                        <script type="text/html" id="subType-baosong">
+                            {{#  if(d.subType % 2 === 0){ }}
+                            <span class="d-block">直接上报</span>
+                            {{#  } else { }}
+                            <span class="d-block">间接上报</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="infoType-baosong">
+                            {{#  if(d.infoType % 2 === 0){ }}
+                            <span class="d-block">政务信息</span>
+                            {{#  } else { }}
+                            <span class="d-block">其他信息</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="status-baosong">
+                            {{#  if(d.status % 2 === 0){ }}
+                            <span class="c-success">已上报</span>
+                            {{#  } else { }}
+                            <span class="c-error">未上报</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="accept-baosong">
+                            {{#  if(d.accept % 2 === 0){ }}
+                            <span class="c-success">已采用</span>
+                            {{#  } else { }}
+                            <span class="c-error">未采用</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="rowTools-baosong">
+                            <button class="btn btn-sm btn-icons btn-success" lay-event="change">
+                                <img alt="" src="icon/view-white@16px.png"/>
+                            </button>
+                            <button class="btn btn-sm btn-icons btn-purple" lay-event="print">
+                                <img alt="" src="icon/print-white@16px.png"/>
+                            </button>
+                            <button class="btn btn-sm btn-icons btn-danger" lay-event="del">
+                                <img alt="" src="icon/delete-white@16px.png"/>
+                            </button>
+                        </script>
+                    </div>
+
+                    <div data-table="fankui" class="d-block" style="display: none;">
+                        <div class="d-flex justify-start mb-lg">
+                            <div class="d-flex-item">
+                                <div data-sort="fankui" class="d-block">
+                                    <button data-switch="fankui" data-type="1" class="btn btn-success">本单位</button>
+                                    <button data-switch="fankui" data-type="2" class="btn btn-default">全部</button>
+                                </div>
+                                <div data-search="fankui" class="d-flex justify-start" style="display: none;">
+                                    <a data-hide-search="fankui" class="d-block mr-ns">
+                                        <img alt="" src="icon/clear-red@16px.png"/>
+                                    </a>
+                                    <div class="d-block plr-xs width-120">
+                                        <input type="text" class="form-control" placeholder="上报人姓名">
+                                    </div>
+                                    <div class="d-block plr-xs width-120">
+                                        <input type="text" class="form-control" placeholder="上报标题">
+                                    </div>
+                                    <div class="d-block plr-xs width-120">
+                                        <select class="chosen-select form-control" data-placeholder="信息类型">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-block width-90 ml-ns">
+                                        <input type="text" class="form-control form-date" placeholder="起始时间">
+                                    </div>
+                                    <span class="d-block">～</span>
+                                    <div class="d-block width-90 mr-ns">
+                                        <input type="text" class="form-control form-date" placeholder="截止时间">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-block">
+                                <button data-show-search="fankui" class="btn btn-icons btn-warning">
+                                    <img alt="" src="icon/search-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="搜索"/>
+                                </button>
+                                <button data-btn="delete-all" class="btn btn-icons btn-danger">
+                                    <img alt="" src="icon/delete-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="删除"/>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-block">
+                            <table id="dataTable-fankui" lay-filter="dataTableFilter-fankui"></table>
+                        </div>
+                        <script type="text/html" id="subType-fankui">
+                            {{#  if(d.subType % 2 === 0){ }}
+                            <span class="d-block">直接上报</span>
+                            {{#  } else { }}
+                            <span class="d-block">间接上报</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="infoType-fankui">
+                            {{#  if(d.infoType % 2 === 0){ }}
+                            <span class="d-block">政务信息</span>
+                            {{#  } else { }}
+                            <span class="d-block">其他信息</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="content-fankui">
+                            <span class="c-success">{{ d.content }}</span>
+                        </script>
+                        <script type="text/html" id="reply-fankui">
+                            <span class="c-error">{{ d.reply }}</span>
+                        </script>
+                        <script type="text/html" id="rowTools-fankui">
+                            <button class="btn btn-sm btn-icons btn-success" lay-event="change">
+                                <img alt="" src="icon/view-white@16px.png"/>
+                            </button>
+                            <button class="btn btn-sm btn-icons btn-danger" lay-event="del">
+                                <img alt="" src="icon/delete-white@16px.png"/>
+                            </button>
+                        </script>
+                    </div>
+
+                    <div data-table="tongji" class="d-block" style="display: none;">
+                        <div class="d-flex justify-start mb-lg">
+                            <div class="d-flex-item">
+                                <div data-sort="reports" class="d-block">
+                                    <button data-switch="reports" data-type="1" class="btn btn-success">报送数量趋势</button>
+                                    <button data-switch="reports" data-type="2" class="btn btn-default">报送情况统计</button>
+                                </div>
+                                <div data-search="reports" class="d-flex justify-start" style="display: none;">
+                                    <a data-hide-search="reports" class="d-block mr-ns">
+                                        <img alt="" src="icon/clear-red@16px.png"/>
+                                    </a>
+                                    <div class="d-block width-90 ml-ns">
+                                        <input type="text" class="form-control form-date" placeholder="起始时间">
+                                    </div>
+                                    <span class="d-block">～</span>
+                                    <div class="d-block width-90 mr-ns">
+                                        <input type="text" class="form-control form-date" placeholder="截止时间">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-block">
+                                <button data-show-search="reports" class="btn btn-icons btn-warning" style="display: none;">
+                                    <img alt="" src="icon/search-white@16px.png" data-toggle="tooltip" data-placement="bottom" title="搜索"/>
+                                </button>
+                            </div>
+                        </div>
+                        <div data-charts="reports" class="d-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="align-center">近半年报送数量趋势统计</h3>
+                                    <br/>
+                                    <div id="__baosongNumberReports" class="d-block" style="height: 420px;"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="align-center">2021年1月报送采用情况分布图</h3>
+                                    <br/>
+                                    <div id="__baosongAcceptReports" class="d-block" style="height: 420px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-table="reports" class="d-block" style="display: none;">
+                            <table id="dataTable-reports"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加/修改 报送 -->
+<div data-content="jianbao" data-change="baosong" class="d-block">
+    <div class="d-flex justify-start">
+        <div class="d-flex-item">
+            <div class="d-flex justify-start">
+                <span class="d-inline">报送管理</span>
+                <span class="mlr-ns">
+                    <i class="glyphicon glyphicon-menu-right"></i>
+                </span>
+                <span class="d-inline c-primary">拟建信息</span>
+            </div>
+        </div>
+        <button data-close="change-baosong" class="btn btn-icons btn-danger">
+            <img src="icon/clear-white@16px.png">
+        </button>
+    </div>
+    <hr>
+    <div class="d-flex" style="height: calc(100% - 56px);">
+        <div class="d-flex-item pr-sm bdr-1 scrollbar">
+            <h2 class="d-flex justify-start"><img class="mr-xs" src="icon/editor-black@24px.png">报送信息</h2>
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="标题名称">
+            </div>
+            <div class="d-block mb-md">
+                <textarea id="contentEditorBaosong" style="width:100%; height: 300px;"></textarea>
+            </div>
+            <div class="d-flex justify-start mb-md">
+                <span class="width-60">附件：</span>
+                <div class="d-flex-item plr-sm">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#piliangUpload">批量上传</button>
+                </div>
+            </div>
+            <div class="d-flex justify-start mb-md">
+                <span class="width-60">&nbsp;</span>
+                <div class="d-flex-item plr-sm">
+                    <span class="width-60">附件列表：</span>
+                    <ul class="d-block">
+                        <li class="d-flex justify-start ptb-sm bdb-1">
+                            <img src="icon/fujian-doc@16px.png">
+                            <span class="d-flex-item plr-xs">sousuo.png</span>
+                            <img src="icon/clear-red@16px.png">
+                        </li>
+                        <li class="d-flex justify-start ptb-sm bdb-1">
+                            <img src="icon/fujian-doc@16px.png">
+                            <span class="d-flex-item plr-xs">sousuo.png</span>
+                            <img src="icon/clear-red@16px.png">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex-item pl-sm bdl-1 scrollbar">
+            <h2 class="d-flex justify-start"><img class="mr-xs" src="icon/editor-black@24px.png">基本信息</h2>
+            <br>
+            <div class="d-block scrollbar" style="height: calc(100% - 42px)">
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">单位：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">作者：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">联系方式：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">信息类型：</span>
+                    <div class="d-flex-item">
+                        <select class="chosen-select form-control">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">是否约稿：</span>
+                    <div class="d-flex-item">
+                        <div class="switch">
+                            <input type="checkbox">
+                            <label>&nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">提交类型：</span>
+                    <div class="d-flex-item">
+                        <select class="chosen-select form-control">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">是否采用：</span>
+                    <div class="d-flex-item">
+                        <div class="switch">
+                            <input type="checkbox">
+                            <label>&nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">采用单位：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="width-120 pl-sm">
+                        <input type="text" class="form-control" value="60分">
+                    </div>
+                </div>
+                <hr/>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">审核人：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">签发人：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <br/>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">&nbsp;</span>
+                    <div class="d-flex-item">
+                        <button class="btn btn-primary width-100">提交</button>
+                        <button class="btn btn-warning width-100">暂存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加/修改 反馈 -->
+<div data-content="jianbao" data-change="fankui" class="d-block">
+    <div class="d-flex justify-start">
+        <div class="d-flex-item">
+            <div class="d-flex justify-start">
+                <span class="d-inline">报送管理</span>
+                <span class="mlr-ns">
+                    <i class="glyphicon glyphicon-menu-right"></i>
+                </span>
+                <span class="d-inline c-primary">反馈信息</span>
+            </div>
+        </div>
+        <button data-close="change-fankui" class="btn btn-icons btn-danger">
+            <img src="icon/clear-white@16px.png">
+        </button>
+    </div>
+    <hr>
+    <div class="d-flex" style="height: calc(100% - 56px);">
+        <div class="d-flex-item pr-sm bdr-1 scrollbar">
+            <h2 class="d-flex justify-start"><img class="mr-xs" src="icon/editor-black@24px.png">反馈信息</h2>
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="标题名称">
+            </div>
+            <div class="d-block mb-md">
+                <textarea id="contentEditorFankui" style="width:100%; height: 300px;"></textarea>
+            </div>
+            <div class="d-flex justify-start mb-md">
+                <span class="width-60">附件：</span>
+                <div class="d-flex-item plr-sm">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#piliangUpload">批量上传</button>
+                </div>
+            </div>
+            <div class="d-flex justify-start mb-md">
+                <span class="width-60">&nbsp;</span>
+                <div class="d-flex-item plr-sm">
+                    <span class="width-60">附件列表：</span>
+                    <ul class="d-block">
+                        <li class="d-flex justify-start ptb-sm bdb-1">
+                            <img src="icon/fujian-doc@16px.png">
+                            <span class="d-flex-item plr-xs">sousuo.png</span>
+                            <img src="icon/clear-red@16px.png">
+                        </li>
+                        <li class="d-flex justify-start ptb-sm bdb-1">
+                            <img src="icon/fujian-doc@16px.png">
+                            <span class="d-flex-item plr-xs">sousuo.png</span>
+                            <img src="icon/clear-red@16px.png">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex-item pl-sm bdl-1 scrollbar">
+            <h2 class="d-flex justify-start"><img class="mr-xs" src="icon/editor-black@24px.png">基本信息</h2>
+            <br>
+            <div class="d-block scrollbar" style="height: calc(100% - 42px)">
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">单位：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">作者：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">联系方式：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">信息类型：</span>
+                    <div class="d-flex-item">
+                        <select class="chosen-select form-control">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">是否约稿：</span>
+                    <div class="d-flex-item">
+                        <div class="switch">
+                            <input type="checkbox">
+                            <label>&nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">提交类型：</span>
+                    <div class="d-flex-item">
+                        <select class="chosen-select form-control">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">是否采用：</span>
+                    <div class="d-flex-item">
+                        <div class="switch">
+                            <input type="checkbox">
+                            <label>&nbsp;</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">采用单位：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="width-120 pl-sm">
+                        <input type="text" class="form-control" value="60分">
+                    </div>
+                </div>
+                <hr/>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">审核人：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">签发人：</span>
+                    <div class="d-flex-item">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <br/>
+                <div class="d-flex justify-start mb-md">
+                    <span class="width-80">&nbsp;</span>
+                    <div class="d-flex-item">
+                        <button class="btn btn-primary width-100">提交</button>
+                        <button class="btn btn-warning width-100">暂存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加任务 -->
+<div class="modal fade" id="addTask">
+    <div class="modal-dialog" style="width: 640px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">添加任务</h4>
+            </div>
+            <div class="modal-body">
+                <form class="d-block">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="任务标题">
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="4" class="form-control" placeholder="任务描述"></textarea>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#piliangUpload">上传附件</button>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/zhubandanwei-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">主办单位</span>
+                            <p class="d-block plr-xs">东兴市边海防办公室</p>
+                            <a class="d-block" data-toggle="modal" data-target="#selectPersonnel">
+                                <img src="icon/task/plus-gray@16px.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/fuzeren-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">负责人</span>
+                            <p class="d-block plr-xs">张三</p>
+                            <a class="d-block" data-toggle="modal" data-target="#selectPersonnel">
+                                <img src="icon/task/plus-gray@16px.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/fuzeren-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">监管人</span>
+                            <p class="d-block plr-xs">李四</p>
+                            <a class="d-block" data-toggle="modal" data-target="#selectPersonnel">
+                                <img src="icon/task/plus-gray@16px.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/fuzeren-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">参与人</span>
+                            <p class="d-block plr-xs">王五</p>
+                            <a class="d-block" data-toggle="modal" data-target="#selectPersonnel">
+                                <img src="icon/task/plus-gray@16px.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/riqi-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">日期</span>
+                            <div class="d-flex-item pl-xs">
+                                <input type="text" class="form-control form-date" placeholder="日期">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/shijian-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">时间</span>
+                            <div class="d-flex-item pl-xs">
+                                <input type="text" class="form-control form-date" placeholder="时间">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/jindu-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">进度</span>
+                            <div class="d-flex-item ptb-sm pl-xs">
+                                <div class="layui-progress" lay-showPercent="yes">
+                                    <div class="layui-progress-bar layui-bg-blue" lay-percent="30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/ziyuan-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">关联资源</span>
+                            <p class="d-block plr-xs">739号界碑</p>
+                            <a class="d-block">
+                                <img src="icon/task/plus-gray@16px.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-start">
+                            <img src="icon/task/fuzeren-gray@16px.png">
+                            <span class="width-80 plr-xs c-dark">位置</span>
+                            <div class="d-flex-item pl-xs">
+                                <img class="width-all height-240" src="images/map.png">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 批量上传 -->
+<div id="piliangUpload" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">批量上传</h4>
+            </div>
+            <div class="modal-body">
+                <div class="d-block">
+                        <span data-btn="file" class="btn btn-icons btn-success">
+                            <input type="file"/>
+                            <img src="icon/plus-white@16px.png"/>
+                        </span>
+                    <button class="btn btn-icons btn-primary">
+                        <img src="icon/upload-start-white@16px.png"/>
+                    </button>
+                    <button class="btn btn-icons btn-danger">
+                        <img src="icon/upload-end-white@16px.png"/>
+                    </button>
+                </div>
+                <br/>
+                <div class="uplad-darg">
+                    <p class="align-center">
+                        <img class="width-75" src="icon/upload-darg-color.png">
+                    </p>
+                    <br/>
+                    <p class="align-center">亲，还没有上传任务!</p>
+                    <p class="align-center">立即点击<a class="c-primary">上传文件</a>按钮上传文件吧！支持文件拖放上传</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 选择人员 -->
+<div id="selectPersonnel" class="modal fade">
+    <div class="modal-dialog" style="width: 768px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">选择人员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-start">
+                    <a class="d-inline">组织机构</a>
+                    <span class="d-inline"> > </span>
+                    <a>自治区边海防办</a>
+                </div>
+                <br/>
+                <div class="d-flex radius-ns bd-1">
+                    <div class="d-flex-item p-sm bdr-1 scrollbar">
+                        <div class="input-control search-box search-box-circle has-icon-left has-icon-right" id="searchboxExample">
+                            <input id="inputSearch" type="search" class="form-control search-input" placeholder="搜索">
+                            <label for="inputSearch" class="input-control-icon-left search-icon"><i class="icon icon-search"></i></label>
+                            <a href="#" class="input-control-icon-right search-clear-btn"><i class="icon icon-remove"></i></a>
+                        </div>
+                        <br/>
+                        <div class="d-block" style="height: 320px; overflow: auto;">
+                            <ul id="orgTree" class="ztree"></ul>
+                        </div>
+                    </div>
+                    <div class="d-flex-item p-sm bdl-1 scrollbar">
+                        <p class="d-block">
+                            <span class="d-flex justify-start plr-sm"><input class="mr-xs" type="checkbox"/> 全选</span>
+                        </p>
+                        <br/>
+                        <div class="d-block">
+                            <div data-box="avatar-cell" class="d-inline mtb-ns">
+                                <div class="avatar">
+                                    <img width="48px" height="48px" class="img-circle" src="images/logo.png">
+                                </div>
+                                <p>隆国志</p>
+                            </div>
+                            <div data-box="avatar-cell" class="d-inline mtb-ns">
+                                <div class="avatar">
+                                    <img width="48px" height="48px" class="img-circle" src="images/logo.png">
+                                </div>
+                                <p>隆国志</p>
+                            </div>
+                            <div data-box="avatar-cell" class="d-inline mtb-ns">
+                                <div class="avatar">
+                                    <img width="48px" height="48px" class="img-circle" src="images/logo.png">
+                                </div>
+                                <p>隆国志</p>
+                            </div>
+                            <div data-box="avatar-cell" class="d-inline mtb-ns">
+                                <div class="avatar">
+                                    <img width="48px" height="48px" class="img-circle" src="images/logo.png">
+                                </div>
+                                <p>隆国志</p>
+                            </div>
+                            <div data-box="avatar-cell" class="d-inline mtb-ns">
+                                <div class="avatar">
+                                    <img width="48px" height="48px" class="img-circle" src="images/logo.png">
+                                </div>
+                                <p>隆国志</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="d-block">
+                    <button class="btn btn-outline btn-primary">
+                            <span class="d-flex justify-start">
+                                <text class="mr-xs">隆国志</text>
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                    </button>
+                    <button class="btn btn-outline btn-primary">
+                            <span class="d-flex justify-start">
+                                <text class="mr-xs">隆国志</text>
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                    </button>
+                    <button class="btn btn-outline btn-primary">
+                            <span class="d-flex justify-start">
+                                <text class="mr-xs">隆国志</text>
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script charset="utf-8" src="plugins/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="plugins/kindeditor/lang/zh-CN.js"></script>
+
+<script src="plugins/moment/moment.js"></script>
+
+<script src="plugins/layui/layui.js"></script>
+
+<script src="plugins/zui/js/zui.min.js"></script>
+<script src="plugins/zui/lib/chosen/chosen.min.js"></script>
+<script src="plugins/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+
+<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script src="plugins/ztree/js/ztree.all.min.js"></script>
+<script src="plugins/ztree/js/org-ztree.js"></script>
+
+<script src="plugins/echarts/echarts.min.js"></script>
+
+<script src="js/content.js"></script>
+
+<script src="js/jianbao.js"></script>
+
