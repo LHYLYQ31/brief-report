@@ -22,6 +22,7 @@ public class BriefreportController {
 
 	@RequestMapping("/index")
 	public String index(Model model) {
+		// System.out.println(CookieUtils.getCookieValue("userId"));
 		model.addAttribute("name", "1234");
 		return "index";
 
