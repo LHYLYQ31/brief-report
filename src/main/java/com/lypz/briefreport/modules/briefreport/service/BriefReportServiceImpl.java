@@ -3,11 +3,14 @@
  */
 package com.lypz.briefreport.modules.briefreport.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+
+import cn.hutool.core.bean.BeanUtil;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,6 +19,7 @@ import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.briefreport.dao.BriefReportMapper;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
+import com.lypz.briefreport.modules.briefreport.vo.BriefReportVo;
 
 /**
  * <B>系统名称：</B><BR>
@@ -53,8 +57,21 @@ public class BriefReportServiceImpl implements BriefReportService {
 	public Result<?> page(BriefReportPo po) {
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
 		List<BriefReport> list = briefReportMapper.select(po);
-		PageInfo<BriefReport> pageInfo = new PageInfo<BriefReport>(list);
+		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(
+				formPageDate(list));
 		return ResultUtil.success(pageInfo);
 
+	}
+
+	private List<BriefReportVo> formPageDate(List<BriefReport> list) {
+
+		List<BriefReportVo> newlist = new ArrayList<BriefReportVo>();
+		for (BriefReport br : list) {
+			BriefReportVo vo = new BriefReportVo();
+			BeanUtil.copyProperties(br, vo, true);
+			vo.set
+			newlist.add(vo);
+		}
+		return newlist;
 	}
 }
