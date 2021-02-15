@@ -54,7 +54,7 @@ public class BriefReportServiceImpl implements BriefReportService {
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
 		List<BriefReport> list = briefReportMapper.select(po);
 		PageInfo<BriefReport> pageInfo = new PageInfo<BriefReport>(list);
-		return ResultUtil.success(list);
+		return ResultUtil.success(pageInfo);
 
 	}
 }

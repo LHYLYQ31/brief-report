@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lypz.briefreport.modules.dictionary.dao.DictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.lypz.briefreport.modules.dictionary.model.Dictionary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dictionary_name" property="dictionaryName" jdbcType="VARCHAR" />
+    <result column="dictionary_type" property="dictionaryType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dictionary_name, dictionary_type
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ly_dictionary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+ <select id="select" resultMap="BaseResultMap" parameterType="com.lypz.briefreport.modules.dictionary.model.Dictionary" >
+    select 
+    <include refid="Base_Column_List" />
+    from ly_dictionary
+    where 1=1
+    <if test=" dictionaryType !=null and dictionaryType ! =0"> and dictionary_type=#{dictionaryType}</if>
+    order by id 
+  </select>
+  
+  <insert id="insert" parameterType="com.lypz.briefreport.modules.dictionary.model.Dictionary" >
+    insert into ly_dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dictionaryName != null" >
+        dictionary_name,
+      </if>
+      <if test="dictionaryType != null" >
+        dictionary_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dictionaryName != null" >
+        #{dictionaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictionaryType != null" >
+        #{dictionaryType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lypz.briefreport.modules.dictionary.model.Dictionary" >
+    update ly_dictionary
+    <set >
+      <if test="dictionaryName != null" >
+        dictionary_name = #{dictionaryName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictionaryType != null" >
+        dictionary_type = #{dictionaryType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>
