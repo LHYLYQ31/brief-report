@@ -69,7 +69,6 @@ public class BriefReportServiceImpl implements BriefReportService {
 		for (BriefReport br : list) {
 			BriefReportVo vo = new BriefReportVo();
 			BeanUtil.copyProperties(br, vo, true);
-			vo.set
 			newlist.add(vo);
 		}
 		return newlist;
