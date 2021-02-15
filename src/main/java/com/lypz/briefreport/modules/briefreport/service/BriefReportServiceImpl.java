@@ -53,8 +53,8 @@ public class BriefReportServiceImpl implements BriefReportService {
 	public Result<?> page(BriefReportPo po) {
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
 		List<BriefReport> list = briefReportMapper.select(po);
-		PageInfo<BriefReport> pageInfo = (PageInfo<BriefReport>) list;
-		return ResultUtil.success(pageInfo);
+		PageInfo<BriefReport> pageInfo = new PageInfo<BriefReport>(list);
+		return ResultUtil.success(list);
 
 	}
 }

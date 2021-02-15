@@ -65,7 +65,7 @@ public class myFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		// 设置跨域
-		// this.allowOrigin(response);
+		this.allowOrigin(response);
 		CookieUtils.setCookie("userId", "1");
 		CookieUtils.setCookie("userId", "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
 		CookieUtils.setCookie("code", "1");

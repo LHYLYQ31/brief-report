@@ -3,103 +3,72 @@
  */
 package com.lypz.briefreport.commom.utils;
 
+import com.lypz.briefreport.commom.handle.CRMExceptionEnum;
+
 /**
- * 
- * <B>系统名称：</B><BR>
- * <B>模块名称：</B><BR>
+ * <B>系统名称：mobile-im</B><BR>
+ * <B>模块名称：结果数据封装</B><BR>
  * <B>中文类名：</B><BR>
  * <B>概要说明：</B><BR>
  * 
- * @author 枫林雪山 @lhy
- * @since 2020年11月4日
  */
 public class ResultUtil {
 	/**
 	 * 
-	 * <B>方法名称：</B><BR>
-	 * <B>概要说明：</B><BR>
-	 * 
+	 * <B>方法名称：success</B><BR>
+	 * <B>概要说明：有参数成功响应</B><BR>
+	 *
+	 * @author：lihaiyi
+	 * @cretetime:2018年7月10日 下午4:58:31
 	 * @param obj
-	 * @return
+	 *            成功结果参数
+	 * @return Result
 	 */
 	public static Result success(Object obj) {
 		Result<Object> result = new Result<Object>();
-		result.setCode(10000);
+		result.setCode(200);
 		result.setMsg("成功");
 		result.setData(obj);
-		result.setStatus(10000);
 		return result;
 	}
 
 	/**
 	 * 
-	 * <B>方法名称：</B><BR>
-	 * <B>概要说明：</B><BR>
-	 * 
-	 * @param code
-	 * @param status
-	 * @param msg
-	 * @return
+	 * <B>方法名称：success</B><BR>
+	 * <B>概要说明：无参数据成功响应</B><BR>
+	 *
+	 * @author：lihaiyi
+	 * @cretetime:2018年7月10日 下午4:58:35
+	 * @return Result
 	 */
-
-	public static Result success(Integer code, Integer status, String msg) {
-		Result<Object> result = new Result<Object>();
-		result.setCode(code);
-		result.setMsg(msg);
-		result.setData(null);
-		result.setStatus(status);
-		return result;
-	}
-
-	public static Result success(Integer code, Integer status, String msg,
-			Object obj) {
-		Result<Object> result = new Result<Object>();
-		result.setCode(code);
-		result.setMsg(msg);
-		result.setData(obj);
-		result.setStatus(status);
-		return result;
+	public static Result success() {
+		return success(null);
 	}
 
 	/**
 	 * 
-	 * <B>方法名称：</B><BR>
-	 * <B>概要说明：</B><BR>
-	 * 
+	 * <B>方法名称：error</B><BR>
+	 * <B>概要说明：错误响应</B><BR>
+	 *
+	 * @author：lihaiyi
+	 * @cretetime:2018年7月10日 下午5:02:02
 	 * @param code
-	 * @param status
 	 * @param msg
-	 * @return
+	 * @return Result
 	 */
-	public static Result error(Integer code, Integer status, String msg) {
+	public static Result error(Integer code, String msg) {
 		Result<Object> result = new Result<Object>();
 		result.setCode(code);
 		result.setMsg(msg);
 		result.setData(null);
-		result.setStatus(status);
 		return result;
 	}
 
-	/**
-	 * 
-	 * <B>方法名称：</B><BR>
-	 * <B>概要说明：</B><BR>
-	 * 
-	 * @param code
-	 * @param status
-	 * @param msg
-	 * @param errorInfo
-	 * @return
-	 */
-	@SuppressWarnings("rawtypes")
-	public static Result error(Integer code, Integer status, String msg,
-			String errorInfo) {
+	public static Result error(CRMExceptionEnum crmEnum) {
 		Result<Object> result = new Result<Object>();
-		result.setCode(code);
-		result.setMsg(msg);
+		result.setCode(crmEnum.getCode());
+		result.setMsg(crmEnum.getMsg());
 		result.setData(null);
-		result.setStatus(status);
-		result.setErrorInfo(errorInfo);
 		return result;
 	}
 }

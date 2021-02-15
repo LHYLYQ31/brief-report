@@ -16,59 +16,42 @@ import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
 
 /**
- * 
- * <B>系统名称：</B><BR>
- * <B>模块名称：</B><BR>
+ * <B>系统名称：tr</B><BR>
+ * <B>模块名称：统一异常处理</B><BR>
  * <B>中文类名：</B><BR>
  * <B>概要说明：</B><BR>
  * 
- * @author 枫林雪山 @lhy
- * @since 2020年11月2日
+ * @since 2018年7月10日
  */
 @ControllerAdvice
 public class ExceptionHandle {
-
 	private static final Logger logger = LoggerFactory
 			.getLogger(ExceptionHandle.class);
 
 	/**
 	 * 
-	 * <B>方法名称：</B><BR>
-	 * <B>概要说明：</B><BR>
-	 * 
+	 * <B>方法名称：handle</B><BR>
+	 * <B>概要说明：统一处理异常</B><BR>
+	 *
+	 * @author：lihaiyi
+	 * @cretetime:2018年7月10日 下午5:16:15
 	 * @param e
-	 * @return
+	 * @return Result
 	 */
 	@ResponseBody
 	@ExceptionHandler(value = Exception.class)
 	public Result handle(Exception e) {
-		if (e instanceof LMWebException) {
-			LMWebException ime = (LMWebException) e;
-			if (ime.getCode() == null || ime.getStatus() == null) {
-				return ResultUtil.success(ime.getData());
-			} else {
-				return ResultUtil.error(ime.getCode(), ime.getStatus(),
-						ime.getMessage());
-			}
-
-		} else if (e instanceof RuntimeException) {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			e.printStackTrace(new PrintStream(baos));
-			String exception = baos.toString();
-			logger.error("业务逻辑报错：{}", exception);
-			return ResultUtil.error(
-					LMWebExceptionEnum.BUSINESS_ERROR.getCode(),
-					LMWebExceptionEnum.BUSINESS_ERROR.getStatus(),
-					LMWebExceptionEnum.BUSINESS_ERROR.getMsg(), exception);
+		if (e instanceof CRMException) {
+			// 自定义异常
+			CRMException ime = (CRMException) e;
+			return ResultUtil.error(ime.getCode(), ime.getMessage());
 		} else {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			e.printStackTrace(new PrintStream(baos));
 			String exception = baos.toString();
 			logger.error("系统报错信息：{}", exception);
-			return ResultUtil.error(LMWebExceptionEnum.UNKNOWN_ERROR.getCode(),
-					LMWebExceptionEnum.UNKNOWN_ERROR.getStatus(),
-					LMWebExceptionEnum.UNKNOWN_ERROR.getMsg(), exception);
+			return ResultUtil.error(CRMExceptionEnum.UNKNOWN_ERROR.getCode(),
+					exception);
 		}
 	}
-
 }
