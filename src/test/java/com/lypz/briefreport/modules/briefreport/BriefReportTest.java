@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import cn.hutool.json.JSONObject;
 
 import com.lypz.briefreport.BriefReportApplication;
-import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.service.BriefReportService;
 
 /**
@@ -32,8 +31,7 @@ public class BriefReportTest {
 
 	// @Test
 	public void detailTest() {
-		BriefReport br = briefReportService.detail(1);
-		JSONObject json = new JSONObject(br);
+		JSONObject json = new JSONObject(briefReportService.detail(1));
 		System.err.println(json.toString());
 	}
 }
