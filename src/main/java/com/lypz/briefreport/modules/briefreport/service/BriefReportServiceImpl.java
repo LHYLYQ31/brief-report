@@ -11,14 +11,18 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONObject;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
+import com.lypz.briefreport.modules.attachment.model.Attachment;
+import com.lypz.briefreport.modules.attachment.service.AttachmentService;
 import com.lypz.briefreport.modules.briefreport.dao.BriefReportMapper;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
+import com.lypz.briefreport.modules.briefreport.vo.BriefReportDetailVo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportVo;
 
 /**
@@ -35,6 +39,8 @@ public class BriefReportServiceImpl implements BriefReportService {
 
 	@Resource
 	BriefReportMapper briefReportMapper;
+	@Resource
+	AttachmentService attachmentService;
 
 	/**
 	 * <B>方法名称：</B><BR>
@@ -43,8 +49,20 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 * @see com.lypz.briefreport.modules.briefreport.service.BriefReportService#detail(java.lang.Integer)
 	 */
 	@Override
-	public BriefReport detail(Integer id) {
-		return briefReportMapper.selectById(id);
+	public Result<?> detail(Integer id) {
+		if (id == null || id == 0) {
+			return ResultUtil.success(new JSONObject());
+		}
+		return ResultUtil.success(formDetail(briefReportMapper.selectById(id)));
+	}
+
+	private BriefReportDetailVo formDetail(BriefReport br) {
+		BriefReportDetailVo vo = new BriefReportDetailVo();
+
+		BeanUtil.copyProperties(br, vo, true);
+		List<Attachment> list = attachmentService.list(1);
+		vo.setAttachments(list);
+		return vo;
 	}
 
 	/**

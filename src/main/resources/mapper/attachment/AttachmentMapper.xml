@@ -27,8 +27,8 @@
     <include refid="Base_Column_List" />
     from ly_attachment
     where is_deleted=1
-    <if test="businessType !=null and businessType !=0"> business_type=#{businessType}</if>
-    <if test="businessId !=null and businessId !=0"> business_id=#{businessId}</if>
+    <if test="businessType !=null and businessType !=0"> and business_type=#{businessType}</if>
+    <if test="businessId !=null and businessId !=0"> and business_id=#{businessId}</if>
     order by id desc
   </select>
 

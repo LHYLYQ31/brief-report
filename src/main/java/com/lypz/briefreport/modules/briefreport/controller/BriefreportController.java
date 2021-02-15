@@ -44,4 +44,11 @@ public class BriefreportController {
 		return briefReportService.page(po);
 
 	}
+
+	@GetMapping(value = "detail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public Result<?> detail(Integer id) {
+		return briefReportService.detail(id);
+
+	}
 }

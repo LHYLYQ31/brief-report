@@ -4,7 +4,6 @@
 package com.lypz.briefreport.modules.briefreport.service;
 
 import com.lypz.briefreport.commom.utils.Result;
-import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 
 /**
@@ -18,7 +17,7 @@ import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
  */
 public interface BriefReportService {
 
-	BriefReport detail(Integer id);
+	Result<?> detail(Integer id);
 
 	/**
 	 * 
