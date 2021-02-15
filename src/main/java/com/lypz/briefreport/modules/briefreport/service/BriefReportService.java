@@ -3,6 +3,7 @@
  */
 package com.lypz.briefreport.modules.briefreport.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 
@@ -29,4 +30,36 @@ public interface BriefReportService {
 	 */
 	Result<?> page(BriefReportPo po);
 
+	/**
+	 *
+	 * <B>方法名称：save</B><BR>
+	 * <B>概要说明：保存简报信息</B><BR>
+	 *
+	 * @param jsonObject
+	 *            简报信息
+	 * @return int 结果值
+	 */
+	int save(JSONObject jsonObject);
+
+	/**
+	 *
+	 * <B>方法名称：update</B><BR>
+	 * <B>概要说明：更新简报信息</B><BR>
+	 *
+	 * @param jsonObject
+	 *            简报信息
+	 * @return int 结果值
+	 */
+	int update(JSONObject jsonObject);
+
+	/**
+	 *
+	 * <B>方法名称：delete</B><BR>
+	 * <B>概要说明：删除简报信息</B><BR>
+	 *
+	 * @param jsonObject
+	 *            简报信息
+	 * @return int 结果值
+	 */
+	int delete(JSONObject jsonObject);
 }

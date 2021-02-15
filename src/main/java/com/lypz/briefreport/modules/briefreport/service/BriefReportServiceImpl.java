@@ -10,11 +10,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONObject;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lypz.briefreport.commom.constant.Constant;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.attachment.model.Attachment;
@@ -24,6 +22,9 @@ import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportDetailVo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportVo;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONObject;
 
 /**
  * <B>系统名称：</B><BR>
@@ -75,8 +76,7 @@ public class BriefReportServiceImpl implements BriefReportService {
 	public Result<?> page(BriefReportPo po) {
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
 		List<BriefReport> list = briefReportMapper.select(po);
-		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(
-				formPageDate(list));
+		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(formPageDate(list));
 		return ResultUtil.success(pageInfo);
 
 	}
@@ -90,5 +90,55 @@ public class BriefReportServiceImpl implements BriefReportService {
 			newlist.add(vo);
 		}
 		return newlist;
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：save</B><BR>
+	 * <B>概要说明：保存简报信息</B><BR>
+	 */
+	@Override
+	public int save(com.alibaba.fastjson.JSONObject jsonObject) {
+		BriefReport briefReport = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.toString(), BriefReport.class);
+		// 简报默认起草状态为未上报（状态值为0）
+		briefReport.setBrStatus(Constant.NOT_REPORTED);
+		// 简报默认删除状态为未上报（状态值为1）
+		briefReport.setIsDeleted(Constant.NOT_DELETED);
+		int flag = briefReportMapper.insert(briefReport);
+		return flag;
+	}
+
+	/**
+	 *
+	 * <B>方法名称：update</B><BR>
+	 * <B>概要说明：更新简报信息</B><BR>
+	 *
+	 * @param jsonObject
+	 *            简报信息
+	 * @return int 结果值
+	 */
+	@Override
+	public int update(com.alibaba.fastjson.JSONObject jsonObject) {
+		BriefReport briefReport = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.toString(), BriefReport.class);
+		int flag = briefReportMapper.update(briefReport);
+		return flag;
+	}
+
+	/**
+	 *
+	 * <B>方法名称：delete</B><BR>
+	 * <B>概要说明：删除简报信息</B><BR>
+	 *
+	 * @param jsonObject
+	 *            简报信息
+	 * @return int 结果值
+	 */
+	@Override
+	public int delete(com.alibaba.fastjson.JSONObject jsonObject) {
+		BriefReport briefReport = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.toString(), BriefReport.class);
+		// 修改简报删除状态为未上报（状态值为1）
+		briefReport.setIsDeleted(Constant.DELETED);
+		int flag = briefReportMapper.update(briefReport);
+		return flag;
 	}
 }
