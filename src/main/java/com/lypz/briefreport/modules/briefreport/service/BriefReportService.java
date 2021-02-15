@@ -3,7 +3,9 @@
  */
 package com.lypz.briefreport.modules.briefreport.service;
 
+import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
+import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 
 /**
  * <B>系统名称：</B><BR>
@@ -17,5 +19,15 @@ import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 public interface BriefReportService {
 
 	BriefReport detail(Integer id);
+
+	/**
+	 * 
+	 * <B>方法名称：page</B><BR>
+	 * <B>概要说明：分页查询简报数据</B><BR>
+	 * 
+	 * @param po
+	 * @return
+	 */
+	Result<?> page(BriefReportPo po);
 
 }

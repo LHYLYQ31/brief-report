@@ -10,6 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.lypz.briefreport.commom.utils.Result;
+import com.lypz.briefreport.commom.utils.ResultUtil;
 
 /**
  * 
@@ -35,15 +39,16 @@ public class ExceptionHandle {
 	 * @param e
 	 * @return
 	 */
-
+	@ResponseBody
 	@ExceptionHandler(value = Exception.class)
-	public String handle(Exception e) {
+	public Result handle(Exception e) {
 		if (e instanceof LMWebException) {
 			LMWebException ime = (LMWebException) e;
 			if (ime.getCode() == null || ime.getStatus() == null) {
-				return "500";
+				return ResultUtil.success(ime.getData());
 			} else {
-				return "500";
+				return ResultUtil.error(ime.getCode(), ime.getStatus(),
+						ime.getMessage());
 			}
 
 		} else if (e instanceof RuntimeException) {
@@ -51,13 +56,18 @@ public class ExceptionHandle {
 			e.printStackTrace(new PrintStream(baos));
 			String exception = baos.toString();
 			logger.error("业务逻辑报错：{}", exception);
-			return "500";
+			return ResultUtil.error(
+					LMWebExceptionEnum.BUSINESS_ERROR.getCode(),
+					LMWebExceptionEnum.BUSINESS_ERROR.getStatus(),
+					LMWebExceptionEnum.BUSINESS_ERROR.getMsg(), exception);
 		} else {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			e.printStackTrace(new PrintStream(baos));
 			String exception = baos.toString();
 			logger.error("系统报错信息：{}", exception);
-			return "500";
+			return ResultUtil.error(LMWebExceptionEnum.UNKNOWN_ERROR.getCode(),
+					LMWebExceptionEnum.UNKNOWN_ERROR.getStatus(),
+					LMWebExceptionEnum.UNKNOWN_ERROR.getMsg(), exception);
 		}
 	}
 

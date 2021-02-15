@@ -9,9 +9,24 @@
     <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="br_status" property="brStatus" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="use_status" property="useStatus" jdbcType="INTEGER" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="contact_information" property="contactInformation" jdbcType="VARCHAR" />
+    <result column="informatio_type" property="informatioType" jdbcType="INTEGER" />
+    <result column="is_order_manuscript" property="isOrderManuscript" jdbcType="INTEGER" />
+    <result column="submit_type" property="submitType" jdbcType="INTEGER" />
+    <result column="use_unit" property="useUnit" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="reviewer" property="reviewer" jdbcType="VARCHAR" />
+    <result column="lssuer" property="lssuer" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, created_at, updated_at, deleted_at, is_deleted, user_id, br_status
+    id, created_at, updated_at, deleted_at, is_deleted, user_id, br_status, title, content, 
+    use_status, unit, author, contact_information, informatio_type, is_order_manuscript, 
+    submit_type, use_unit, score, reviewer, lssuer
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -19,8 +34,18 @@
     from ly_brief_report
     where id = #{id,jdbcType=INTEGER}
   </select>
-
-
+ <select id="select" resultMap="BaseResultMap" parameterType="com.lypz.briefreport.modules.briefreport.model.BriefReport" >
+    select 
+    <include refid="Base_Column_List" />
+    from ly_brief_report
+    where is_deleted=1
+    <if test="brStatus !=null"> and br_status= #{brStatus}</if>
+    <if test="isOrderManuscript !=null"> and is_order_manuscript= #{isOrderManuscript}</if>
+    <if test="useStatus !=null"> and use_status= #{useStatus}</if>
+    
+    order by id desc
+  </select>
+ 
   <insert id="insert" parameterType="com.lypz.briefreport.modules.briefreport.model.BriefReport" >
     insert into ly_brief_report
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -45,6 +70,45 @@
       <if test="brStatus != null" >
         br_status,
       </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="useStatus != null" >
+        use_status,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="contactInformation != null" >
+        contact_information,
+      </if>
+      <if test="informatioType != null" >
+        informatio_type,
+      </if>
+      <if test="isOrderManuscript != null" >
+        is_order_manuscript,
+      </if>
+      <if test="submitType != null" >
+        submit_type,
+      </if>
+      <if test="useUnit != null" >
+        use_unit,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="reviewer != null" >
+        reviewer,
+      </if>
+      <if test="lssuer != null" >
+        lssuer,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -67,6 +131,45 @@
       </if>
       <if test="brStatus != null" >
         #{brStatus,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInformation != null" >
+        #{contactInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="informatioType != null" >
+        #{informatioType,jdbcType=INTEGER},
+      </if>
+      <if test="isOrderManuscript != null" >
+        #{isOrderManuscript,jdbcType=INTEGER},
+      </if>
+      <if test="submitType != null" >
+        #{submitType,jdbcType=INTEGER},
+      </if>
+      <if test="useUnit != null" >
+        #{useUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="reviewer != null" >
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="lssuer != null" >
+        #{lssuer,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,8 +194,47 @@
       <if test="brStatus != null" >
         br_status = #{brStatus,jdbcType=INTEGER},
       </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        use_status = #{useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInformation != null" >
+        contact_information = #{contactInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="informatioType != null" >
+        informatio_type = #{informatioType,jdbcType=INTEGER},
+      </if>
+      <if test="isOrderManuscript != null" >
+        is_order_manuscript = #{isOrderManuscript,jdbcType=INTEGER},
+      </if>
+      <if test="submitType != null" >
+        submit_type = #{submitType,jdbcType=INTEGER},
+      </if>
+      <if test="useUnit != null" >
+        use_unit = #{useUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="reviewer != null" >
+        reviewer = #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="lssuer != null" >
+        lssuer = #{lssuer,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-
+  
 </mapper>
