@@ -28,6 +28,8 @@ import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.attachment.dao.AttachmentMapper;
 import com.lypz.briefreport.modules.attachment.model.Attachment;
+import com.lypz.briefreport.modules.briefreport.dao.BriefReportMapper;
+import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 
 /**
  * <B>系统名称：</B><BR>
@@ -43,7 +45,8 @@ import com.lypz.briefreport.modules.attachment.model.Attachment;
 public class AttachmentServiceImpl implements AttachmentService {
 	@Resource
 	AttachmentMapper attachmentMapper;
-
+	@Resource
+	BriefReportMapper briefReportMapper;
 	@Value("${brie.freport.path}")
 	String brieFreportPath;
 
@@ -79,7 +82,23 @@ public class AttachmentServiceImpl implements AttachmentService {
 	 * @see com.lypz.briefreport.modules.attachment.service.AttachmentService#delete(java.lang.Integer)
 	 */
 	@Override
-	public Result<?> delete(Integer id) {
+	public Result<?> delete(Integer id, Integer userId) {
+		Attachment satt = attachmentMapper.selectById(id);
+		Integer autherId = null;
+		if (satt != null) {
+			if (satt.getBusinessType() == 1) {
+				BriefReport sbr = briefReportMapper.selectById(Integer
+						.parseInt(satt.getBusinessId()));
+				if (sbr != null) {
+					autherId = sbr.getUserId();
+				}
+
+			}
+			if (!userId.equals(autherId)) {
+				throw new CRMException(CRMExceptionEnum.NO_POWER_ERROR);
+			}
+
+		}
 		Attachment att = new Attachment();
 		att.setId(id);
 		att.setDeletedAt(new Date());

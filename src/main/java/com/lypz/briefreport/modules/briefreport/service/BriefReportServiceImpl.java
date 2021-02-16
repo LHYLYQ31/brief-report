@@ -18,6 +18,8 @@ import cn.hutool.json.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lypz.briefreport.commom.constant.Constant;
+import com.lypz.briefreport.commom.handle.CRMException;
+import com.lypz.briefreport.commom.handle.CRMExceptionEnum;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.attachment.model.Attachment;
@@ -150,16 +152,23 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 * @return int 结果值
 	 */
 	@Override
-	public Result<?> delete(Integer id) {
+	public Result<?> delete(Integer id, Integer userId) {
 		BriefReport br = new BriefReport();
 		// 修改简报删除状态为未上报（状态值为1）
 		br.setIsDeleted(Constant.DELETED);
 		br.setDeletedAt(new Date());
-		int flag = briefReportMapper.update(br);
-		if (flag == 1) {
-			return ResultUtil.success(true);
+		br.setId(id);
+		BriefReport selectbr = briefReportMapper.selectById(id);
+		if (selectbr != null && userId.equals(selectbr.getUserId())) {
+			int flag = briefReportMapper.update(br);
+			if (flag == 1) {
+				return ResultUtil.success(true);
+			} else {
+				return ResultUtil.success(false);
+			}
 		} else {
-			return ResultUtil.success(false);
+			throw new CRMException(CRMExceptionEnum.NO_POWER_ERROR);
 		}
+
 	}
 }

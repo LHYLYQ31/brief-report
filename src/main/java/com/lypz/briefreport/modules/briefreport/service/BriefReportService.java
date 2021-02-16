@@ -62,5 +62,5 @@ public interface BriefReportService {
 	 *            简报信息
 	 * @return int 结果值
 	 */
-	Result<?> delete(Integer id);
+	Result<?> delete(Integer id, Integer userId);
 }

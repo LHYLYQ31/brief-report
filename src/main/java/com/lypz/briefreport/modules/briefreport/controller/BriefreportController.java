@@ -102,7 +102,9 @@ public class BriefreportController {
 	 */
 	@PostMapping(value = "delete/{id}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public Result<?> deleteBriefReport(@PathVariable Integer id) {
-		return briefReportService.delete(id);
+	public Result<?> deleteBriefReport(@PathVariable Integer id,
+			HttpServletRequest request) {
+		return briefReportService.delete(id,
+				Integer.parseInt(LoginUtil.getLoginUserId(request)));
 	}
 }

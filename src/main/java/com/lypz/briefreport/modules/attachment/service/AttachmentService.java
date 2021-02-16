@@ -52,7 +52,7 @@ public interface AttachmentService {
 	 * @param id
 	 * @return
 	 */
-	Result<?> delete(Integer id);
+	Result<?> delete(Integer id, Integer userId);
 
 	/**
 	 * 
