@@ -5,6 +5,7 @@ package com.lypz.briefreport.modules.briefreport.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lypz.briefreport.commom.utils.LoginUtil;
 import com.lypz.briefreport.commom.utils.Result;
+import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
@@ -106,5 +108,18 @@ public class BriefreportController {
 			HttpServletRequest request) {
 		return briefReportService.delete(id,
 				Integer.parseInt(LoginUtil.getLoginUserId(request)));
+	}
+
+	@PostMapping(value = "batch-delete", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public Result<?> deleteBriefReport(String ids, HttpServletRequest request) {
+		if (StringUtils.isNotBlank(ids) && ids.contains(",")) {
+			String[] idss = ids.split(",");
+			for (String id : idss) {
+				briefReportService.delete(Integer.parseInt(id),
+						Integer.parseInt(LoginUtil.getLoginUserId(request)));
+			}
+		}
+		return ResultUtil.success(true);
 	}
 }

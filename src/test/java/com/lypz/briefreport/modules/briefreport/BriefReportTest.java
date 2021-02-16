@@ -84,6 +84,6 @@ public class BriefReportTest {
 	public void deleteBriefReport() {
 		BriefReport briefReport = new BriefReport();
 		briefReport.setId(9);
-		briefReportService.delete(9);
+		briefReportService.delete(9, 1);
 	}
 }
