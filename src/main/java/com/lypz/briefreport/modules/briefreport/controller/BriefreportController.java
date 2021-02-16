@@ -3,17 +3,22 @@
  */
 package com.lypz.briefreport.modules.briefreport.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
+import com.lypz.briefreport.commom.utils.LoginUtil;
 import com.lypz.briefreport.commom.utils.Result;
+import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
+import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
 import com.lypz.briefreport.modules.briefreport.service.BriefReportService;
 
 /**
@@ -63,9 +68,12 @@ public class BriefreportController {
 	 *            前段返回json数据
 	 * @return int 结果值
 	 */
-	@PostMapping(value = "add", produces = "application/json; charset=UTF-8")
-	public int saveBriefReport(JSONObject json) {
-		return briefReportService.save(json);
+	@PostMapping("add")
+	@ResponseBody
+	public Result<?> saveBriefReport(BriefReportSavePo record,
+			HttpServletRequest request) {
+		record.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		return briefReportService.save(record);
 	}
 
 	/**
@@ -78,8 +86,9 @@ public class BriefreportController {
 	 * @return int 返回结果集
 	 */
 	@PostMapping(value = "update", produces = "application/json; charset=UTF-8")
-	public int updateBriefReport(JSONObject json) {
-		return briefReportService.update(json);
+	@ResponseBody
+	public Result<?> updateBriefReport(BriefReport record) {
+		return briefReportService.update(record);
 	}
 
 	/**
@@ -91,8 +100,9 @@ public class BriefreportController {
 	 *            前段返回json数据
 	 * @return int 返回结果集
 	 */
-	@PostMapping(value = "delete", produces = "application/json; charset=UTF-8")
-	public int deleteBriefReport(JSONObject json) {
-		return briefReportService.update(json);
+	@PostMapping(value = "delete/{id}", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public Result<?> deleteBriefReport(@PathVariable Integer id) {
+		return briefReportService.delete(id);
 	}
 }

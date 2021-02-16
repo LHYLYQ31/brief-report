@@ -16,7 +16,7 @@ public enum CRMExceptionEnum {
 			"json数据格式不符合标准"), FILE_NO_EXIST(-5, "文件不存在"), CODE_TIMEOUT(-1,
 			"未知错误"), LOGIN_FAIL(-2, "参数为空"), EMAIL_NO_AUTH(-3, "参数不合法"), MOBILE_NO_AUTH(
 			-6, "数据库中的字段值为空"), FILE_TYPE_ERROR(-7, "文件类型错误"), REPEAT_MEMBERID_ERROR(
-			-8, "修改的会员编号已经存在"), PRODUCT_NO_EXIST_ERROR(-9, "产品不存在");
+			-8, "修改的会员编号已经存在"), LOGIN_LOSE_EFFICACY_ERROR(-9, "登录失效");
 	private Integer code;
 
 	private String msg;

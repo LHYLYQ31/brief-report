@@ -4,11 +4,16 @@
 package com.lypz.briefreport.modules.briefreport.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONObject;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,11 +25,9 @@ import com.lypz.briefreport.modules.attachment.service.AttachmentService;
 import com.lypz.briefreport.modules.briefreport.dao.BriefReportMapper;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
+import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportDetailVo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportVo;
-
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONObject;
 
 /**
  * <B>系统名称：</B><BR>
@@ -76,7 +79,8 @@ public class BriefReportServiceImpl implements BriefReportService {
 	public Result<?> page(BriefReportPo po) {
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
 		List<BriefReport> list = briefReportMapper.select(po);
-		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(formPageDate(list));
+		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(
+				formPageDate(list));
 		return ResultUtil.success(pageInfo);
 
 	}
@@ -98,14 +102,22 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 * <B>概要说明：保存简报信息</B><BR>
 	 */
 	@Override
-	public int save(com.alibaba.fastjson.JSONObject jsonObject) {
-		BriefReport briefReport = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.toString(), BriefReport.class);
+	public Result<?> save(BriefReportSavePo record) {
 		// 简报默认起草状态为未上报（状态值为0）
-		briefReport.setBrStatus(Constant.NOT_REPORTED);
+		record.setBrStatus(Constant.NOT_REPORTED);
 		// 简报默认删除状态为未上报（状态值为1）
-		briefReport.setIsDeleted(Constant.NOT_DELETED);
-		int flag = briefReportMapper.insert(briefReport);
-		return flag;
+		record.setIsDeleted(Constant.NOT_DELETED);
+		record.setCreatedAt(new Date());
+		int flag = briefReportMapper.insert(record);
+		if (flag == 1) {// 更新附件关系
+			if (StringUtils.isNotBlank(record.getAttachmentIds())) {
+				attachmentService.update(record.getAttachmentIds().split(","),
+						record.getId());
+			}
+			return ResultUtil.success(true);
+		} else {
+			return ResultUtil.success(false);
+		}
 	}
 
 	/**
@@ -118,10 +130,14 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 * @return int 结果值
 	 */
 	@Override
-	public int update(com.alibaba.fastjson.JSONObject jsonObject) {
-		BriefReport briefReport = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.toString(), BriefReport.class);
-		int flag = briefReportMapper.update(briefReport);
-		return flag;
+	public Result<?> update(BriefReport record) {
+		record.setUpdatedAt(new Date());
+		int flag = briefReportMapper.update(record);
+		if (flag == 1) {
+			return ResultUtil.success(true);
+		} else {
+			return ResultUtil.success(false);
+		}
 	}
 
 	/**
@@ -134,11 +150,16 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 * @return int 结果值
 	 */
 	@Override
-	public int delete(com.alibaba.fastjson.JSONObject jsonObject) {
-		BriefReport briefReport = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.toString(), BriefReport.class);
+	public Result<?> delete(Integer id) {
+		BriefReport br = new BriefReport();
 		// 修改简报删除状态为未上报（状态值为1）
-		briefReport.setIsDeleted(Constant.DELETED);
-		int flag = briefReportMapper.update(briefReport);
-		return flag;
+		br.setIsDeleted(Constant.DELETED);
+		br.setDeletedAt(new Date());
+		int flag = briefReportMapper.update(br);
+		if (flag == 1) {
+			return ResultUtil.success(true);
+		} else {
+			return ResultUtil.success(false);
+		}
 	}
 }

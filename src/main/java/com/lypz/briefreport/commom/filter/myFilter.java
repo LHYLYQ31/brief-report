@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lypz.briefreport.commom.handle.ExceptionHandle;
-import com.lypz.briefreport.commom.utils.CookieUtils;
 
 /**
  * <B>系统名称：</B><BR>
@@ -66,9 +65,14 @@ public class myFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		// 设置跨域
 		this.allowOrigin(response);
-		CookieUtils.setCookie("userId", "1");
-		CookieUtils.setCookie("userId", "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
-		CookieUtils.setCookie("code", "1");
+		request.getSession().setAttribute("userId", 1);
+		request.getSession().setAttribute("userUUId",
+				"de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
+		request.getSession().setAttribute("code", "001");
+		// CookieUtils.setCookie("userId", "1");
+		// CookieUtils.setCookie("userId",
+		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
+		// CookieUtils.setCookie("code", "1");
 		try {
 
 			chain.doFilter(request, response);

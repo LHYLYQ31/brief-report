@@ -21,6 +21,26 @@ public class BriefReportPo extends BriefReport {
 	private Integer pageNum;
 
 	private Integer pageSize;
+	// 1 本单位 2 全部单位
+	private Integer unitType;
+
+	/**
+	 * <B>取得：</B>unitType<BR>
+	 * 
+	 * @return Integer
+	 */
+	public Integer getUnitType() {
+		return unitType;
+	}
+
+	/**
+	 * <B>设定：</B>unitType<BR>
+	 * 
+	 * @param unitType
+	 */
+	public void setUnitType(Integer unitType) {
+		this.unitType = unitType;
+	}
 
 	/**
 	 * <B>取得：</B>pageNum<BR>

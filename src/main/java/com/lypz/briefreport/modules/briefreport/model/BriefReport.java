@@ -7,6 +7,7 @@ import cn.hutool.json.JSONObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class BriefReport {
+
 	private Integer id;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createdAt;

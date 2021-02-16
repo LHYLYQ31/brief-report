@@ -3,9 +3,10 @@
  */
 package com.lypz.briefreport.modules.briefreport.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lypz.briefreport.commom.utils.Result;
+import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
+import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
 
 /**
  * <B>系统名称：</B><BR>
@@ -39,7 +40,7 @@ public interface BriefReportService {
 	 *            简报信息
 	 * @return int 结果值
 	 */
-	int save(JSONObject jsonObject);
+	Result<?> save(BriefReportSavePo record);
 
 	/**
 	 *
@@ -50,7 +51,7 @@ public interface BriefReportService {
 	 *            简报信息
 	 * @return int 结果值
 	 */
-	int update(JSONObject jsonObject);
+	Result<?> update(BriefReport record);
 
 	/**
 	 *
@@ -61,5 +62,5 @@ public interface BriefReportService {
 	 *            简报信息
 	 * @return int 结果值
 	 */
-	int delete(JSONObject jsonObject);
+	Result<?> delete(Integer id);
 }

@@ -32,12 +32,9 @@
     order by id desc
   </select>
 
-  <insert id="insert" parameterType="com.lypz.briefreport.modules.attachment.model.Attachment" >
+  <insert id="insert" parameterType="com.lypz.briefreport.modules.attachment.model.Attachment"  useGeneratedKeys="true" keyProperty="id">
     insert into ly_attachment
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="filePath != null" >
         file_path,
       </if>
@@ -64,9 +61,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="filePath != null" >
         #{filePath,jdbcType=VARCHAR},
       </if>

@@ -20,11 +20,11 @@
     <include refid="Base_Column_List" />
     from ly_dictionary
     where 1=1
-    <if test=" dictionaryType !=null and dictionaryType ! =0"> and dictionary_type=#{dictionaryType}</if>
+    <if test=" dictionaryType !=null and dictionaryType !=0"> and dictionary_type=#{dictionaryType}</if>
     order by id 
   </select>
   
-  <insert id="insert" parameterType="com.lypz.briefreport.modules.dictionary.model.Dictionary" >
+  <insert id="insert" parameterType="com.lypz.briefreport.modules.dictionary.model.Dictionary" useGeneratedKeys="true" keyProperty="id">
     insert into ly_dictionary
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

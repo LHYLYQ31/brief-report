@@ -46,12 +46,9 @@
     order by id desc
   </select>
  
-  <insert id="insert" parameterType="com.lypz.briefreport.modules.briefreport.model.BriefReport" >
+  <insert id="insert" parameterType="com.lypz.briefreport.modules.briefreport.model.BriefReport"  useGeneratedKeys="true" keyProperty="id">
     insert into ly_brief_report
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="createdAt != null" >
         created_at,
       </if>
@@ -111,9 +108,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
       </if>

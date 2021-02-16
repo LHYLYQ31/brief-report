@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONObject;
+
 import com.lypz.briefreport.BriefReportApplication;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
+import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
 import com.lypz.briefreport.modules.briefreport.service.BriefReportService;
-
-import cn.hutool.json.JSONObject;
 
 /**
  * <B>系统名称：</B><BR>
@@ -48,13 +50,14 @@ public class BriefReportTest {
 	// @Test
 	public void saveBriefReport() {
 		com.alibaba.fastjson.JSONObject json = new com.alibaba.fastjson.JSONObject();
-		BriefReport briefReport = new BriefReport();
+		BriefReportSavePo briefReport = new BriefReportSavePo();
 		json.put("createdAt", new Date());
 		json.put("title", "测试简报添加功能20210215");
 		json.put("userId", 001001);
 		json.put("content", "测试简报添加功能测试简报添加功能测试简报添加功能测试简报添加功能测试简报添加功能");
 		json.put("informatioType", 1);
-		briefReportService.save(json);
+		BeanUtil.copyProperties(json, briefReport, true);
+		briefReportService.save(briefReport);
 	}
 
 	/**
@@ -68,8 +71,7 @@ public class BriefReportTest {
 		BriefReport briefReport = new BriefReport();
 		briefReport.setId(9);
 		briefReport.setTitle("测试简报更新功能20210215");
-		briefReportService
-				.update((com.alibaba.fastjson.JSONObject) com.alibaba.fastjson.JSONObject.toJSON(briefReport));
+		briefReportService.update(briefReport);
 	}
 
 	/**
@@ -82,7 +84,6 @@ public class BriefReportTest {
 	public void deleteBriefReport() {
 		BriefReport briefReport = new BriefReport();
 		briefReport.setId(9);
-		briefReportService
-				.delete((com.alibaba.fastjson.JSONObject) com.alibaba.fastjson.JSONObject.toJSON(briefReport));
+		briefReportService.delete(9);
 	}
 }

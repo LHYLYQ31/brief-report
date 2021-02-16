@@ -14,7 +14,7 @@ public class Constant {
 	/**
 	 * 报送管理状态------未上报
 	 */
-	public static final Integer NOT_REPORTED = 0;
+	public static final Integer NOT_REPORTED = 2;
 
 	/**
 	 * 报送管理状态------已上报
