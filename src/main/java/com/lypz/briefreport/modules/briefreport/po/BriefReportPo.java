@@ -23,6 +23,44 @@ public class BriefReportPo extends BriefReport {
 	private Integer pageSize;
 	// 1 本单位 2 全部单位
 	private Integer unitType;
+	private String endTime;
+	private String startTime;
+
+	/**
+	 * <B>取得：</B>endTime<BR>
+	 * 
+	 * @return String
+	 */
+	public String getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * <B>设定：</B>endTime<BR>
+	 * 
+	 * @param endTime
+	 */
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	/**
+	 * <B>取得：</B>startTime<BR>
+	 * 
+	 * @return String
+	 */
+	public String getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * <B>设定：</B>startTime<BR>
+	 * 
+	 * @param startTime
+	 */
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 
 	/**
 	 * <B>取得：</B>unitType<BR>

@@ -30,6 +30,7 @@ import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportDetailVo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportVo;
+import com.lypz.briefreport.modules.dictionary.dao.DictionaryMapper;
 
 /**
  * <B>系统名称：</B><BR>
@@ -47,6 +48,8 @@ public class BriefReportServiceImpl implements BriefReportService {
 	BriefReportMapper briefReportMapper;
 	@Resource
 	AttachmentService attachmentService;
+	@Resource
+	DictionaryMapper dictionaryMapper;
 
 	/**
 	 * <B>方法名称：</B><BR>
@@ -80,7 +83,7 @@ public class BriefReportServiceImpl implements BriefReportService {
 	@Override
 	public Result<?> page(BriefReportPo po) {
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
-		List<BriefReport> list = briefReportMapper.select(po);
+		List<BriefReport> list = briefReportMapper.page(po);
 		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(
 				formPageDate(list));
 		return ResultUtil.success(pageInfo);
@@ -93,6 +96,10 @@ public class BriefReportServiceImpl implements BriefReportService {
 		for (BriefReport br : list) {
 			BriefReportVo vo = new BriefReportVo();
 			BeanUtil.copyProperties(br, vo, true);
+			vo.setInformatioType(dictionaryMapper.selectById(
+					br.getInformatioType()).getDictionaryName());
+			vo.setSubmitType(dictionaryMapper.selectById(br.getSubmitType())
+					.getDictionaryName());
 			newlist.add(vo);
 		}
 		return newlist;

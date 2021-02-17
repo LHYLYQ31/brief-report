@@ -29,9 +29,45 @@ public class BriefReportVo {
 
 	private String author;
 
-	private Integer informatioType;
+	private String informatioType;
 
-	private Integer submitType;
+	private String submitType;
+
+	/**
+	 * <B>取得：</B>informatioType<BR>
+	 * 
+	 * @return String
+	 */
+	public String getInformatioType() {
+		return informatioType;
+	}
+
+	/**
+	 * <B>设定：</B>informatioType<BR>
+	 * 
+	 * @param informatioType
+	 */
+	public void setInformatioType(String informatioType) {
+		this.informatioType = informatioType;
+	}
+
+	/**
+	 * <B>取得：</B>submitType<BR>
+	 * 
+	 * @return String
+	 */
+	public String getSubmitType() {
+		return submitType;
+	}
+
+	/**
+	 * <B>设定：</B>submitType<BR>
+	 * 
+	 * @param submitType
+	 */
+	public void setSubmitType(String submitType) {
+		this.submitType = submitType;
+	}
 
 	/**
 	 * <B>取得：</B>id<BR>
@@ -139,42 +175,6 @@ public class BriefReportVo {
 	 */
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-
-	/**
-	 * <B>取得：</B>informatioType<BR>
-	 * 
-	 * @return Integer
-	 */
-	public Integer getInformatioType() {
-		return informatioType;
-	}
-
-	/**
-	 * <B>设定：</B>informatioType<BR>
-	 * 
-	 * @param informatioType
-	 */
-	public void setInformatioType(Integer informatioType) {
-		this.informatioType = informatioType;
-	}
-
-	/**
-	 * <B>取得：</B>submitType<BR>
-	 * 
-	 * @return Integer
-	 */
-	public Integer getSubmitType() {
-		return submitType;
-	}
-
-	/**
-	 * <B>设定：</B>submitType<BR>
-	 * 
-	 * @param submitType
-	 */
-	public void setSubmitType(Integer submitType) {
-		this.submitType = submitType;
 	}
 
 }

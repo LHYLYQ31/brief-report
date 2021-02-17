@@ -45,7 +45,21 @@
     
     order by id desc
   </select>
- 
+ <select id="page" resultMap="BaseResultMap" parameterType="com.lypz.briefreport.modules.briefreport.po.BriefReportPo" >
+    select 
+    <include refid="Base_Column_List" />
+    from ly_brief_report
+    where is_deleted=1
+    <if test="brStatus !=null"> and br_status= #{brStatus}</if>
+    <if test="isOrderManuscript !=null"> and is_order_manuscript= #{isOrderManuscript}</if>
+    <if test="useStatus !=null"> and use_status= #{useStatus}</if>
+    <if test="author !=null and author !='' "> and author like CONCAT('%',#{author},'%')</if>
+    <if test="title !=null and title!='' "> and title like CONCAT('%',#{title},'%') </if>
+    <if test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
+    <if test="submitType !=null and submitType !=-1"> and submit_type= #{submitType}</if>
+    <if test="informatioType !=null and informatioType !=-1"> and informatio_type= #{informatioType}</if>
+    order by id desc
+  </select>
   <insert id="insert" parameterType="com.lypz.briefreport.modules.briefreport.model.BriefReport"  useGeneratedKeys="true" keyProperty="id">
     insert into ly_brief_report
     <trim prefix="(" suffix=")" suffixOverrides="," >
