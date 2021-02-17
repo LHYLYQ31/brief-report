@@ -6,9 +6,13 @@ package com.lypz.briefreport.commom.utils;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
+
+import cn.hutool.json.JSONArray;
 
 public class DateUtil {
 	// 格式：年－月－日 小时：分钟：秒
@@ -378,33 +382,32 @@ public class DateUtil {
 		return Cal.getTime();
 	}
 
+	/**
+	 * 
+	 * <B>方法名称：</B><BR>
+	 * <B>概要说明：获取指定时间上个月的日期</B><BR>
+	 * 
+	 * @param date
+	 * @return
+	 * @throws Exception
+	 */
+	public static Date getLastMonth(Date date, Integer i) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MONTH, -i);
+		// return cn.hutool.core.date.DateUtil.format(cal.getTime(), "yyyy-MM");
+		return cal.getTime();
+	}
+
 	public static void main(String[] args) {
-		// String dateStr = DateUtil.yearthDate("2017-05-30");
-		// System.out.println(dateStr);
-		// long min = DateUtil.timeSub("2017-04-12 00:00:00",
-		// "2017-04-13 00:00:00")/60;
-		// System.out.println(min);
-		String settlementDate = DateUtil.dateToString(new Date(), "yyyy-MM-dd");
-		long day = DateUtil.dayDiff(
-				DateUtil.stringtoDate("2017-06-22", "yyyy-MM-dd"),
-				DateUtil.stringtoDate(settlementDate, "yyyy-MM-dd"));
-		if (day >= 0) {
-			System.out.println(day);
+		Integer total = 5;
+		List<String> time = new ArrayList<String>();
+		Date startDate = new Date();
+		for (int i = total; i > 0; i--) {
+			startDate = DateUtil.getLastMonth(startDate, i);
+			time.add(cn.hutool.core.date.DateUtil.format(startDate, "yyyy-MM"));
 		}
-		String goodsArriveTime = "2017-04-02 17:00-18:00";
-		int space_index = goodsArriveTime.indexOf(" ");
-		String arrive_date = goodsArriveTime.substring(0, space_index);
-		String arrive_time = goodsArriveTime.substring(space_index + 1,
-				goodsArriveTime.length());
-		System.out.println(arrive_date);
-		System.out.println(arrive_time);
-		String arrive_start_time = arrive_time.substring(0, 2);
-		String arrive_end_time = arrive_time.substring(6, 8);
-		System.out.println(arrive_start_time);
-		System.out.println(arrive_end_time);
-		String Time = DateUtil.getCurrDate("HH");
-		System.out.println(Time);
-		String Time2 = DateUtil.getCurrDate("mm");
-		System.out.println(Time2);
+		time.add(cn.hutool.core.date.DateUtil.format(new Date(), "yyyy-MM"));
+		System.err.println(new JSONArray(time));
 	}
 }

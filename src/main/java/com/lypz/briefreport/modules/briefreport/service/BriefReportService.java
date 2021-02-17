@@ -7,6 +7,7 @@ import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
+import com.lypz.briefreport.modules.briefreport.po.ReportPagePo;
 
 /**
  * <B>系统名称：</B><BR>
@@ -30,6 +31,16 @@ public interface BriefReportService {
 	 * @return
 	 */
 	Result<?> page(BriefReportPo po);
+
+	/**
+	 * 
+	 * <B>方法名称：reportPage</B><BR>
+	 * <B>概要说明：统计分页查询</B><BR>
+	 * 
+	 * @param po
+	 * @return
+	 */
+	Result<?> reportPage(ReportPagePo po);
 
 	/**
 	 *
@@ -63,4 +74,14 @@ public interface BriefReportService {
 	 * @return int 结果值
 	 */
 	Result<?> delete(Integer id, Integer userId);
+
+	/**
+	 * 
+	 * <B>方法名称：reportData</B><BR>
+	 * <B>概要说明：查询统计数据</B><BR>
+	 * 
+	 * @param record
+	 * @return
+	 */
+	Result<?> reportData();
 }

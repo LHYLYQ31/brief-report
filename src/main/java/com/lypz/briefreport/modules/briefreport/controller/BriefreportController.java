@@ -21,6 +21,7 @@ import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
+import com.lypz.briefreport.modules.briefreport.po.ReportPagePo;
 import com.lypz.briefreport.modules.briefreport.service.BriefReportService;
 
 /**
@@ -52,6 +53,20 @@ public class BriefreportController {
 	public Result<?> page(BriefReportPo po) {
 		return briefReportService.page(po);
 
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：reportPage</B><BR>
+	 * <B>概要说明：统计分页查询</B><BR>
+	 * 
+	 * @param po
+	 * @return
+	 */
+	@GetMapping(value = "report-page", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	Result<?> reportPage(ReportPagePo po) {
+		return briefReportService.reportPage(po);
 	}
 
 	@GetMapping(value = "detail", produces = "application/json; charset=UTF-8")
@@ -119,7 +134,24 @@ public class BriefreportController {
 				briefReportService.delete(Integer.parseInt(id),
 						Integer.parseInt(LoginUtil.getLoginUserId(request)));
 			}
+		} else {
+			briefReportService.delete(Integer.parseInt(ids),
+					Integer.parseInt(LoginUtil.getLoginUserId(request)));
 		}
 		return ResultUtil.success(true);
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：reportData</B><BR>
+	 * <B>概要说明：查询统计数据</B><BR>
+	 * 
+	 * @param record
+	 * @return
+	 */
+	@GetMapping(value = "report-data", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	Result<?> reportData() {
+		return briefReportService.reportData();
 	}
 }

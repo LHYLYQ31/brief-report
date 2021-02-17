@@ -5,7 +5,9 @@ package com.lypz.briefreport.modules.briefreport.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -20,6 +22,7 @@ import com.github.pagehelper.PageInfo;
 import com.lypz.briefreport.commom.constant.Constant;
 import com.lypz.briefreport.commom.handle.CRMException;
 import com.lypz.briefreport.commom.handle.CRMExceptionEnum;
+import com.lypz.briefreport.commom.utils.DateUtil;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.attachment.model.Attachment;
@@ -28,8 +31,10 @@ import com.lypz.briefreport.modules.briefreport.dao.BriefReportMapper;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
+import com.lypz.briefreport.modules.briefreport.po.ReportPagePo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportDetailVo;
 import com.lypz.briefreport.modules.briefreport.vo.BriefReportVo;
+import com.lypz.briefreport.modules.briefreport.vo.ReportPageVo;
 import com.lypz.briefreport.modules.dictionary.dao.DictionaryMapper;
 
 /**
@@ -177,5 +182,77 @@ public class BriefReportServiceImpl implements BriefReportService {
 			throw new CRMException(CRMExceptionEnum.NO_POWER_ERROR);
 		}
 
+	}
+
+	/**
+	 * <B>方法名称：</B><BR>
+	 * <B>概要说明：</B><BR>
+	 * 
+	 * @see com.lypz.briefreport.modules.briefreport.service.BriefReportService#reportPage(com.lypz.briefreport.modules.briefreport.po.ReportPagePo)
+	 */
+	@Override
+	public Result<?> reportPage(ReportPagePo po) {
+		PageHelper.startPage(po.getPageNum(), po.getPageSize());
+		List<ReportPageVo> list = briefReportMapper.reportPage(po);
+		PageInfo<ReportPageVo> pageInfo = new PageInfo<ReportPageVo>(list);
+		return ResultUtil.success(pageInfo);
+	}
+
+	/**
+	 * <B>方法名称：</B><BR>
+	 * <B>概要说明：</B><BR>
+	 * 
+	 * @see com.lypz.briefreport.modules.briefreport.service.BriefReportService#reportData(com.lypz.briefreport.modules.briefreport.model.BriefReport)
+	 */
+	@Override
+	public Result<?> reportData() {
+		BriefReport subrecord = new BriefReport();// 查询提交总数
+		subrecord.setBrStatus(1);
+		Integer subCount = briefReportMapper.selectCount(subrecord);
+
+		BriefReport adoptRecord = new BriefReport();// 使用总数
+		adoptRecord.setUseStatus(1);
+		Integer adoptCount = briefReportMapper.selectCount(adoptRecord);
+
+		List<String> dayList = getHalfYearDay();
+
+		List<Integer> subList = new ArrayList<Integer>();
+		List<Integer> adoptList = new ArrayList<Integer>();
+		for (String createdAt : dayList) {
+			subrecord.setCreatedAt(cn.hutool.core.date.DateUtil.parse(
+					createdAt, "yyyy-MM"));
+			Integer subNum = briefReportMapper.selectCount(subrecord);
+			adoptRecord.setCreatedAt(cn.hutool.core.date.DateUtil.parse(
+					createdAt, "yyyy-MM"));
+			Integer adoptNum = briefReportMapper.selectCount(adoptRecord);
+			subList.add(subNum);
+			adoptList.add(adoptNum);
+		}
+		Map map = new HashMap();
+		map.put("totalSub", subCount);
+		map.put("totalAdop", adoptCount);
+		map.put("month", dayList);
+		map.put("subList", subList);
+		map.put("adoptList", adoptList);
+		return ResultUtil.success(map);
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：getHalfYearDay()</B><BR>
+	 * <B>概要说明：获取半年的日期</B><BR>
+	 * 
+	 * @return
+	 */
+	private List<String> getHalfYearDay() {
+		Integer total = 5;
+		List<String> time = new ArrayList<String>();
+		Date startDate = new Date();
+		for (int i = total; i > 0; i--) {
+			startDate = DateUtil.getLastMonth(startDate, i);
+			time.add(cn.hutool.core.date.DateUtil.format(startDate, "yyyy-MM"));
+		}
+		time.add(cn.hutool.core.date.DateUtil.format(new Date(), "yyyy-MM"));
+		return time;
 	}
 }
