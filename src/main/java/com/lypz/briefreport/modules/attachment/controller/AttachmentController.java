@@ -69,9 +69,9 @@ public class AttachmentController {
 	}
 
 	@RequestMapping("upload")
-	Result<?> upload(MultipartFile[] files, HttpServletRequest request)
-			throws Exception {
-		return attachmentService.upload(files, request);
+	Result<?> upload(MultipartFile[] files, Integer businessType,
+			String businessId) throws Exception {
+		return attachmentService.upload(files, businessType, businessId);
 	}
 
 }

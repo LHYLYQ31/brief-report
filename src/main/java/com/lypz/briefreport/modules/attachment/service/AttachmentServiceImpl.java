@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -112,12 +111,12 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	@Override
-	public Result upload(MultipartFile[] files, HttpServletRequest request)
-			throws Exception {
+	public Result upload(MultipartFile[] files, Integer businessType,
+			String businessId) throws Exception {
 		try {
-			String type = request.getParameter("businessType");
-			String businessId = request.getParameter("businessId");
-			if (files == null || StringUtils.isBlank(type)) {
+			;
+
+			if (files == null || businessType == null) {
 				throw new CRMException(CRMExceptionEnum.PARAM_EMPTY);
 			}
 			List<Integer> ids = new ArrayList<Integer>();
@@ -131,7 +130,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 					Attachment attachment = new Attachment();
 					attachment.setFileName(fileName);
 					attachment.setBusinessId(businessId);
-					attachment.setBusinessType(Integer.parseInt(type));
+					attachment.setBusinessType(businessType);
 					attachment.setCreatedAt(new Date());
 					String tempPath = File.separator
 							+ DateUtil.format(new Date(), "yyyy-MM-dd")

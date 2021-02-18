@@ -5,8 +5,6 @@ package com.lypz.briefreport.modules.attachment.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lypz.briefreport.commom.utils.Result;
@@ -77,7 +75,7 @@ public interface AttachmentService {
 	 * @throws Exception
 	 */
 
-	public Result upload(MultipartFile[] files, HttpServletRequest request)
-			throws Exception;
+	public Result upload(MultipartFile[] files, Integer businessType,
+			String businessId) throws Exception;
 
 }

@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONObject;
@@ -47,6 +48,7 @@ import com.lypz.briefreport.modules.dictionary.dao.DictionaryMapper;
  * @since 2021年2月13日
  */
 @Service
+@Transactional
 public class BriefReportServiceImpl implements BriefReportService {
 
 	@Resource

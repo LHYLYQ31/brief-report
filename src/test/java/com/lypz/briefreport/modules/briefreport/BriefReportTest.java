@@ -6,18 +6,17 @@ package com.lypz.briefreport.modules.briefreport;
 import java.util.Date;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONObject;
 
-import com.lypz.briefreport.BriefReportApplication;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportSavePo;
 import com.lypz.briefreport.modules.briefreport.service.BriefReportService;
+import com.lypz.briefreport.modules.comment.BaseTest;
 
 /**
  * <B>系统名称：</B><BR>
@@ -29,9 +28,9 @@ import com.lypz.briefreport.modules.briefreport.service.BriefReportService;
  * @since 2021年2月13日
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = BriefReportApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BriefReportTest {
+public class BriefReportTest extends BaseTest {
+	private static final Logger logger = LoggerFactory
+			.getLogger(BriefReportTest.class);
 	@Autowired
 	BriefReportService briefReportService;
 
@@ -80,10 +79,21 @@ public class BriefReportTest {
 	 * <B>概要说明：删除简报信息测试方法</B><BR>
 	 * 
 	 */
-	@Test
+	// @Test
 	public void deleteBriefReport() {
 		BriefReport briefReport = new BriefReport();
 		briefReport.setId(9);
 		briefReportService.delete(9, 1);
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：reportData</B><BR>
+	 * <B>概要说明：查询统计数据</B><BR>
+	 * 
+	 */
+	@Test
+	public void reportData() {
+		briefReportService.reportData();
 	}
 }
