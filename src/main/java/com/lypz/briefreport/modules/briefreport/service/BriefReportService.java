@@ -3,6 +3,8 @@
  */
 package com.lypz.briefreport.modules.briefreport.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 import com.lypz.briefreport.modules.briefreport.po.BriefReportPo;
@@ -84,4 +86,25 @@ public interface BriefReportService {
 	 * @return
 	 */
 	Result<?> reportData();
+
+	/**
+	 * 
+	 * <B>方法名称：reviseExportExcel</B><BR>
+	 * <B>概要说明：前台导出数据，将导出文件添加标题</B><BR>
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	Result<?> reviseExportExcel(Integer userId, String filePath);
+
+	/**
+	 * 
+	 * <B>方法名称：exportExcel</B><BR>
+	 * <B>概要说明：前台导出数据，将导出文件添加标题</B><BR>
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	void exportExcel(BriefReportPo po, HttpServletResponse response)
+			throws Exception;
 }

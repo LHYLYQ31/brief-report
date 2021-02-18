@@ -3,6 +3,9 @@
  */
 package com.lypz.briefreport.modules.briefreport.service;
 
+import java.io.File;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,13 +13,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONObject;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -57,6 +64,8 @@ public class BriefReportServiceImpl implements BriefReportService {
 	AttachmentService attachmentService;
 	@Resource
 	DictionaryMapper dictionaryMapper;
+	@Value("${brie.freport.path}")
+	String brieFreportPath;
 
 	/**
 	 * <B>方法名称：</B><BR>
@@ -256,5 +265,84 @@ public class BriefReportServiceImpl implements BriefReportService {
 		}
 		time.add(cn.hutool.core.date.DateUtil.format(new Date(), "yyyy-MM"));
 		return time;
+	}
+
+	/**
+	 * <B>方法名称：</B><BR>
+	 * <B>概要说明：</B><BR>
+	 * 
+	 * @see com.lypz.briefreport.modules.briefreport.service.BriefReportService#reviseExportExcel(java.lang.Integer,
+	 *      java.lang.String)
+	 */
+	@Override
+	public Result<?> reviseExportExcel(Integer userId, String filePath) {
+		if (StringUtils.isNotBlank(filePath)) {
+			File file = new File(filePath);
+			if (file.exists()) {
+				ExcelWriter writer = ExcelUtil.getWriter(file);
+				Integer rows = writer.getRowCount();
+				String title = "";
+				if (true) {
+					title = Constant.AREA_EXCEL_TITLE.replace("XXX", "");
+				} else {
+					title = Constant.COUNTY_EXCEL_TITLE.replace("XXX", "");
+				}
+				writer.merge(rows, title, true);
+				writer.close();
+			}
+		}
+		return ResultUtil.success(true);
+	}
+
+	/**
+	 * <B>方法名称：</B><BR>
+	 * <B>概要说明：</B><BR>
+	 * 
+	 * @throws Exception
+	 * 
+	 * @see com.lypz.briefreport.modules.briefreport.service.BriefReportService#exportExcel(com.lypz.briefreport.modules.briefreport.po.BriefReportPo)
+	 */
+	@Override
+	public void exportExcel(BriefReportPo po, HttpServletResponse response)
+			throws Exception {
+		OutputStream out = null;
+		try {
+
+			String fileName = cn.hutool.core.date.DateUtil.format(new Date(),
+					"yyyyMMddHHmmss") + ".xls";
+			out = response.getOutputStream();
+			response.setContentType("multipart/form-data");
+			response.setCharacterEncoding("utf-8");
+			response.setHeader("Content-disposition", "attachment;filename="
+					+ URLEncoder.encode(fileName, "UTF-8") + ".xls");
+			List<BriefReportVo> list = formPageDate(briefReportMapper.page(po));
+			ExcelWriter writer = new ExcelWriter(true);
+			writer.passCurrentRow();
+			// 自定义标题别名
+			String[] names = { "id", "title", "author", "unit", "submitType",
+					"informatioType", "brStatus", "createdAt" };
+			String[] alias = { "序号", "标题", "上报人", "上报单位", "提交类型", "信息类型", "状态",
+					"发布时间" };
+			for (int i = 0; i < names.length; i++) {
+				writer.addHeaderAlias(names[i], alias[i]);
+			}
+			// 合并单元格后的标题行，使用默认标题样式
+			String title = "";
+			if (true) {
+				title = Constant.AREA_EXCEL_TITLE.replace("XXX", "");
+			} else {
+				title = Constant.COUNTY_EXCEL_TITLE.replace("XXX", "");
+			}
+			writer.merge(names.length - 1, title);
+			// 一次性写出内容，使用默认样式，强制输出标题
+			writer.setColumnWidth(names.length - 1, 25);
+			writer.write(list, true);
+			writer.flush(response.getOutputStream());
+			writer.close();
+			out.flush();
+		} finally {
+			if (out != null)
+				out.close();
+		}
 	}
 }

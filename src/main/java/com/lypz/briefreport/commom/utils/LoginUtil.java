@@ -21,7 +21,6 @@ public class LoginUtil {
 
 	public static String getLoginUserId(HttpServletRequest request) {
 		Object userId = request.getSession().getAttribute("userId");
-		System.out.println(userId);
 		if (userId != null) {
 			return userId.toString();
 		} else {

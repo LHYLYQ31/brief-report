@@ -5,7 +5,6 @@ package com.lypz.briefreport.modules.briefreport;
 
 import java.util.Date;
 
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +91,22 @@ public class BriefReportTest extends BaseTest {
 	 * <B>概要说明：查询统计数据</B><BR>
 	 * 
 	 */
-	@Test
+	// @Test
 	public void reportData() {
 		briefReportService.reportData();
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：reviseExportExcel</B><BR>
+	 * <B>概要说明：修正导出excel文件</B><BR>
+	 * 
+	 * @param userId
+	 * @return
+	 * @return
+	 */
+	// @Test
+	public void reviseExportExcel() {
+		briefReportService.reviseExportExcel(1, "D:\\Desktop\\1.xlsx");
 	}
 }

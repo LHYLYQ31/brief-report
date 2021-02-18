@@ -35,5 +35,13 @@ public class Constant {
 	 * 报送管理删除状态------已删除
 	 */
 	public static final Integer DELETED = 0;
+	/**
+	 * 区标题
+	 */
+	public static final String AREA_EXCEL_TITLE = "xxx年采用信息统计表";
+	/**
+	 * 县标题
+	 */
+	public static final String COUNTY_EXCEL_TITLE = "xxx年边境沿海市县边海防信息报送明细表";
 
 }

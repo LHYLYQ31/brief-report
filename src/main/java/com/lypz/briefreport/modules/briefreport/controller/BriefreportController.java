@@ -4,6 +4,7 @@
 package com.lypz.briefreport.modules.briefreport.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,8 @@ public class BriefreportController {
 
 	@GetMapping(value = "page", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public Result<?> page(BriefReportPo po) {
+	public Result<?> page(BriefReportPo po, HttpServletRequest request) {
+		po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
 		return briefReportService.page(po);
 
 	}
@@ -153,5 +155,20 @@ public class BriefreportController {
 	@ResponseBody
 	Result<?> reportData() {
 		return briefReportService.reportData();
+	}
+
+	/**
+	 * 
+	 * <B>方法名称：exportExcel</B><BR>
+	 * <B>概要说明：前台导出数据，将导出文件添加标题</B><BR>
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@GetMapping(value = "export-excel", produces = "application/json; charset=UTF-8")
+	void exportExcel(BriefReportPo po, HttpServletResponse response,
+			HttpServletRequest request) throws Exception {
+		po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		briefReportService.exportExcel(po, response);
 	}
 }
