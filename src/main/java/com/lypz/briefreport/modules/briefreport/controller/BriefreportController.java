@@ -43,7 +43,6 @@ public class BriefreportController {
 
 	@RequestMapping("/index")
 	public String index(Model model) {
-		// System.out.println(CookieUtils.getCookieValue("userId"));
 		model.addAttribute("name", "1234");
 		return "index";
 
@@ -51,7 +50,8 @@ public class BriefreportController {
 
 	@GetMapping(value = "page", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public Result<?> page(BriefReportPo po, HttpServletRequest request) {
+	public Result<?> page(BriefReportPo po, HttpServletRequest request,
+			HttpServletResponse respo) {
 		po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
 		return briefReportService.page(po);
 

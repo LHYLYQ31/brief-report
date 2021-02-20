@@ -65,14 +65,18 @@ public class myFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		// 设置跨域
 		this.allowOrigin(response);
-		request.getSession().setAttribute("userId", 1);
+		request.getSession()
+				.setAttribute("userId", request.getHeader("userId"));
 		request.getSession().setAttribute("userUUId",
 				"de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
-		request.getSession().setAttribute("code", "001");
-		// CookieUtils.setCookie("userId", "1");
+		request.getSession().setAttribute("code", request.getHeader("code"));
+		// CookieUtils.setCookie("userId", "1", response);
 		// CookieUtils.setCookie("userId",
-		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
-		// CookieUtils.setCookie("code", "1");
+		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b",
+		// response);
+		// CookieUtils.setCookie("code", "001001", response);
+		// System.out.println(CookieUtils.getCookie("code",
+		// request).getValue());
 		try {
 
 			chain.doFilter(request, response);
@@ -122,11 +126,13 @@ public class myFilter implements Filter {
 		response.setHeader("Access-Control-Allow-Methods",
 				"POST, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Max-Age", "0");
-		response.setHeader(
-				"Access-Control-Allow-Headers",
-				"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified,"
-						+ " Cache-Control, Expires,Content-Type, X-E4M-With,userId,token,Authorization,"
-						+ "authorization,platform,source,mobile,device,User-Agent");
+		response.setHeader("Access-Control-Allow-Headers", "*");
+		// response.setHeader(
+		// "Access-Control-Allow-Headers",
+		// "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified,"
+		// +
+		// " Cache-Control, Expires,Content-Type, X-E4M-With,userId,token,Authorization,"
+		// + "authorization,platform,source,mobile,device,User-Agent");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("XDomainRequestAllowed", "1");
 	}

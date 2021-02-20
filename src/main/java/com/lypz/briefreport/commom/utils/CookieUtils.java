@@ -11,17 +11,14 @@ package com.lypz.briefreport.commom.utils;
  * @author 枫林雪山 @lhy
  * @since 2021年2月14日
  */
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,21 +30,21 @@ public class CookieUtils {
 	public static final int COOKIE_MAX_AGE = 7 * 24 * 3600;
 	public static final int COOKIE_HALF_HOUR = 30 * 60;
 
-	private static HttpServletResponse response;
-
-	@Autowired
-	private HttpServletResponse response2;
-
-	private static HttpServletRequest request;
-
-	@Autowired
-	private HttpServletRequest request2;
-
-	@PostConstruct
-	public void beforeInit() {
-		request = request2;
-		response = response2;
-	}
+	// private static HttpServletResponse response;
+	//
+	// @Autowired
+	// private HttpServletResponse response2;
+	//
+	// private static HttpServletRequest request;
+	//
+	// @Autowired
+	// private HttpServletRequest request2;
+	//
+	// @PostConstruct
+	// public void beforeInit() {
+	// request = request2;
+	// response = response2;
+	// }
 
 	/**
 	 * 根据Cookie名称得到Cookie对象，不存在该对象则返回Null
@@ -56,7 +53,7 @@ public class CookieUtils {
 	 * @param name
 	 * @return
 	 */
-	public static Cookie getCookie(String name) {
+	public static Cookie getCookie(String name, HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null || cookies.length < 1) {
 			return null;
@@ -78,8 +75,8 @@ public class CookieUtils {
 	 * @param name
 	 * @return
 	 */
-	public static String getCookieValue(String name) {
-		Cookie cookie = getCookie(name);
+	public static String getCookieValue(String name, HttpServletRequest request) {
+		Cookie cookie = getCookie(name, request);
 		if (cookie != null) {
 			return cookie.getValue();
 		}
@@ -94,11 +91,12 @@ public class CookieUtils {
 	 * @param name
 	 *            这个是名称，不是值
 	 */
-	public static void removeCookie(String name) {
+	public static void removeCookie(String name, HttpServletRequest request,
+			HttpServletResponse response) {
 		if (null == name) {
 			return;
 		}
-		Cookie cookie = getCookie(name);
+		Cookie cookie = getCookie(name, request);
 		if (null != cookie) {
 			cookie.setPath("/");
 			cookie.setValue("");
@@ -115,7 +113,8 @@ public class CookieUtils {
 	 * @param value
 	 * @param maxValue
 	 */
-	public static void setCookie(String name, String value, int maxValue) {
+	public static void setCookie(String name, String value, int maxValue,
+			HttpServletResponse response) {
 		if (StringUtils.isBlank(name)) {
 			return;
 		}
@@ -124,17 +123,14 @@ public class CookieUtils {
 		}
 		Cookie cookie = new Cookie(name, value);
 		cookie.setPath("/");
+		cookie.setHttpOnly(true);
 		if (maxValue != 0) {
 			cookie.setMaxAge(maxValue);
 		} else {
 			cookie.setMaxAge(COOKIE_HALF_HOUR);
 		}
 		response.addCookie(cookie);
-		try {
-			response.flushBuffer();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	/**
@@ -144,8 +140,9 @@ public class CookieUtils {
 	 * @param name
 	 * @param value
 	 */
-	public static void setCookie(String name, String value) {
-		setCookie(name, value, COOKIE_HALF_HOUR);
+	public static void setCookie(String name, String value,
+			HttpServletResponse response) {
+		setCookie(name, value, COOKIE_HALF_HOUR, response);
 	}
 
 	/**
@@ -154,7 +151,7 @@ public class CookieUtils {
 	 * @param request
 	 * @return
 	 */
-	public static Map<String, Cookie> getCookieMap() {
+	public static Map<String, Cookie> getCookieMap(HttpServletRequest request) {
 		Map<String, Cookie> cookieMap = new HashMap<>();
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 1) {
