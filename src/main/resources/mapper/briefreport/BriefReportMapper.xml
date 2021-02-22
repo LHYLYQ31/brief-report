@@ -65,7 +65,7 @@
 		<include refid="Base_Column_List" />
 		from ly_brief_report
 		where is_deleted=1
-		<if test="brStatus !=null"> and br_status= #{brStatus}</if>
+		<if test="brStatus != null"> and br_status= #{brStatus}</if>
 		<if test="userId !=null"> and user_id= #{userId}</if>
 		<if test="unit !=null"> and unit = #{unit}</if>
 		<if test="isOrderManuscript !=null"> and is_order_manuscript= #{isOrderManuscript}</if>
@@ -110,7 +110,8 @@
 		<include refid="Base_Column_List" />
 		from ly_brief_report
 		where is_deleted=1
-		<if test="brStatus !=null"> and br_status= #{brStatus}</if>
+		<if test="brStatus == 1"> and br_status= #{brStatus}</if>
+		<if test="brStatus == 2"> and br_status in(3,2)</if>
 		<if test="isOrderManuscript !=null"> and is_order_manuscript= #{isOrderManuscript}</if>
 		<if test="useStatus !=null"> and use_status= #{useStatus}</if>
 		<if test="author !=null and author !='' "> and author like CONCAT('%',#{author},'%')</if>

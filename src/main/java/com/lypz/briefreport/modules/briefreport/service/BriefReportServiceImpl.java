@@ -85,7 +85,10 @@ public class BriefReportServiceImpl implements BriefReportService {
 		BriefReportDetailVo vo = new BriefReportDetailVo();
 
 		BeanUtil.copyProperties(br, vo, true);
-		List<Attachment> list = attachmentService.list(1);
+		Attachment att = new Attachment();
+		att.setBusinessType(1);
+		att.setBusinessId(br.getId().toString());
+		List<Attachment> list = attachmentService.list(att);
 		vo.setAttachments(list);
 		return vo;
 	}
@@ -133,7 +136,7 @@ public class BriefReportServiceImpl implements BriefReportService {
 	@Override
 	public Result<?> save(BriefReportSavePo record) {
 		// 简报默认起草状态为未上报（状态值为0）
-		record.setBrStatus(Constant.NOT_REPORTED);
+		// record.setBrStatus(Constant.NOT_REPORTED);
 		// 简报默认删除状态为未上报（状态值为1）
 		record.setIsDeleted(Constant.NOT_DELETED);
 		record.setCreatedAt(new Date());
