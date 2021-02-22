@@ -67,6 +67,7 @@
 		where is_deleted=1
 		<if test="brStatus !=null"> and br_status= #{brStatus}</if>
 		<if test="userId !=null"> and user_id= #{userId}</if>
+		<if test="unit !=null"> and unit = #{unit}</if>
 		<if test="isOrderManuscript !=null"> and is_order_manuscript= #{isOrderManuscript}</if>
 		<if test="useStatus !=null"> and use_status= #{useStatus}</if>
 

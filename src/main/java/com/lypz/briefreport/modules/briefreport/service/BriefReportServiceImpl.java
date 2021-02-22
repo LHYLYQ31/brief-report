@@ -98,6 +98,10 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 */
 	@Override
 	public Result<?> page(BriefReportPo po) {
+		if (po.getUnitType() != null && po.getUnitType() != 0
+				&& po.getUnitType() == 1) {// 查询本单位 需要根据uuid 查询
+			po.setUnit("");
+		}
 		PageHelper.startPage(po.getPageNum(), po.getPageSize());
 		List<BriefReport> list = briefReportMapper.page(po);
 		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(
