@@ -82,7 +82,8 @@
 		<if test="brStatus !=null"> and br_status= #{brStatus}</if>
 		<if test="isOrderManuscript !=null"> and is_order_manuscript= #{isOrderManuscript}</if>
 		<if test="useStatus !=null"> and use_status= #{useStatus}</if>
-		<if test="createdAt !=null"> and date_format(created_at,'%Y-%m')= date_format(#{createdAt},'%Y-%m')</if>
+		<if test="createdAt !=null"> and date_format(created_at,'%Y-%m')=
+			date_format(#{createdAt},'%Y-%m')</if>
 	</select>
 	<!-- 按月查询6个月的数据 -->
 	<select id="selectCountByMonth" resultMap="MonthReportBaseResultMap"
@@ -126,37 +127,78 @@
 	<!-- 统计分页 -->
 	<select id="reportPage" resultMap="ReportBaseResultMap"
 		parameterType="com.lypz.briefreport.modules.briefreport.po.ReportPagePo">
-		select temp.*,floor(temp.adopt_number/temp.sub_number*100) as
-		adopt_ratio from (
-		select
-		ly_br_2.sub_count as sub_number ,
-		use_unit as
-		department,
-		ly_br_1.use_count as adopt_number
-		from ly_brief_report ly_br
-		LEFT JOIN(select COUNT(id) as use_count, use_unit as temp_use_unit
-		from
-		ly_brief_report where is_deleted=1 and use_status=1
+		<!-- select temp.*,floor(temp.adopt_number/temp.sub_number*100) as adopt_ratio 
+			from ( select ly_br_2.sub_count as sub_number , use_unit as department, ly_br_1.use_count 
+			as adopt_number from ly_brief_report ly_br LEFT JOIN(select COUNT(id) as 
+			use_count, use_unit as temp_use_unit from ly_brief_report where is_deleted=1 
+			and use_status=1 <if test="startTime !=null and startTime !='' and endTime 
+			!=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') 
+			and STR_TO_DATE(#{endTime},'%Y-%m-%d') </if> GROUP BY use_unit)ly_br_1 on 
+			ly_br_1.temp_use_unit=ly_br.use_unit LEFT JOIN(select COUNT(id) as sub_count, 
+			use_unit as temp_use_unit from ly_brief_report where is_deleted=1 and br_status=1 
+			<if test="startTime !=null and startTime !='' and endTime !=null and endTime 
+			!=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d') 
+			</if> GROUP BY use_unit)ly_br_2 on ly_br_2.temp_use_unit=ly_br.use_unit where 
+			ly_br.is_deleted=1 <if test="startTime !=null and startTime !='' and endTime 
+			!=null and endTime !=''"> and ly_br.created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') 
+			and STR_TO_DATE(#{endTime},'%Y-%m-%d') </if> GROUP BY ly_br.use_unit order 
+			by ly_br.id desc ) temp -->
+
+
+		SELECT
+		temp.*, IFNULL(floor(
+		temp.adopt_number / temp.sub_number * 100
+		),0) AS adopt_ratio
+		FROM
+		(
+		SELECT
+		IFNULL(ly_br_2.sub_count,0) AS sub_number,
+		ly_br.unit AS department,
+		IFNULL(ly_br_1.use_count,0) AS adopt_number
+		FROM
+		ly_brief_report ly_br
+		LEFT JOIN (
+		SELECT
+		IFNULL(COUNT(id),0) AS use_count,
+		unit AS temp_unit
+		FROM
+		ly_brief_report
+		WHERE
+		is_deleted = 1
+		AND use_status = 1
+		AND br_status = 1
 		<if
 			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and
 			STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
 		GROUP BY
-		use_unit)ly_br_1 on ly_br_1.temp_use_unit=ly_br.use_unit
-		LEFT
-		JOIN(select COUNT(id) as sub_count, use_unit as temp_use_unit from
-		ly_brief_report where is_deleted=1 and br_status=1
+		unit
+		) ly_br_1 ON ly_br_1.temp_unit = ly_br.unit
+		LEFT JOIN (
+		SELECT
+		COUNT(id) AS sub_count,
+		unit AS temp_unit
+		FROM
+		ly_brief_report
+		WHERE
+		is_deleted = 1
+		AND br_status = 1
 		<if
 			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and
 			STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
-		GROUP BY use_unit)ly_br_2 on ly_br_2.temp_use_unit=ly_br.use_unit
-		where ly_br.is_deleted=1
+		GROUP BY
+		unit
+		) ly_br_2 ON ly_br_2.temp_unit = ly_br.unit
+		WHERE
+		ly_br.is_deleted = 1
 		<if
-			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and ly_br.created_at BETWEEN
-			STR_TO_DATE(#{startTime},'%Y-%m-%d') and
+			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and
 			STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
-		GROUP BY ly_br.use_unit
-		order by ly_br.id desc
+		GROUP BY
+		ly_br.unit
+		ORDER BY
+		ly_br.id DESC
 		) temp
+
 	</select>
 
 	<insert id="insert"
