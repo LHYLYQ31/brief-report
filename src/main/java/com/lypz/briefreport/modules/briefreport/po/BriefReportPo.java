@@ -26,6 +26,26 @@ public class BriefReportPo extends BriefReport {
 	private String endTime;
 	private String startTime;
 
+	private String deptCode;
+
+	/**
+	 * <B>取得：</B>deptCode<BR>
+	 * 
+	 * @return String
+	 */
+	public String getDeptCode() {
+		return deptCode;
+	}
+
+	/**
+	 * <B>设定：</B>deptCode<BR>
+	 * 
+	 * @param deptCode
+	 */
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+
 	/**
 	 * <B>取得：</B>endTime<BR>
 	 * 

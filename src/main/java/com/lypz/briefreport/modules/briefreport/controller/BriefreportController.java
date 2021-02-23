@@ -168,7 +168,7 @@ public class BriefreportController {
 	@GetMapping(value = "export-excel", produces = "application/json; charset=UTF-8")
 	void exportExcel(BriefReportPo po, HttpServletResponse response,
 			HttpServletRequest request) throws Exception {
-		po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		// po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
 		briefReportService.exportExcel(po, response);
 	}
 }

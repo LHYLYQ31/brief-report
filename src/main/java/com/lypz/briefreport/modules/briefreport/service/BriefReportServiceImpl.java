@@ -335,10 +335,14 @@ public class BriefReportServiceImpl implements BriefReportService {
 			}
 			// 合并单元格后的标题行，使用默认标题样式
 			String title = "";
-			if (true) {
+			if (StringUtils.isNotBlank(po.getDeptCode())
+					&& po.getDeptCode().length() >= 6) {
 				title = Constant.AREA_EXCEL_TITLE.replace("XXX", "");
-			} else {
+			} else if (StringUtils.isNotBlank(po.getDeptCode())
+					&& po.getDeptCode().length() <= 9) {
 				title = Constant.COUNTY_EXCEL_TITLE.replace("XXX", "");
+			} else {
+				title = "报送表";
 			}
 			writer.merge(names.length - 1, title);
 			// 一次性写出内容，使用默认样式，强制输出标题
