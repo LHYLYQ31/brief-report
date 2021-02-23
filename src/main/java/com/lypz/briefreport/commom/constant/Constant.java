@@ -43,5 +43,13 @@ public class Constant {
 	 * 县标题
 	 */
 	public static final String COUNTY_EXCEL_TITLE = "xxx年边境沿海市县边海防信息报送明细表";
+	/**
+	 * 县市 code 的长度
+	 */
+	public static final int COUNTY_CODE_LENGTH = 9;
+	/**
+	 * 区code 长度
+	 */
+	public static final int AREA_CODE_LENGTH = 6;
 
 }

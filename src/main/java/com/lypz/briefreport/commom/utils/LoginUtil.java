@@ -28,4 +28,13 @@ public class LoginUtil {
 		}
 	}
 
+	public static String getDeptCode(HttpServletRequest request) {
+		Object code = request.getSession().getAttribute("code");
+		if (code != null) {
+			return code.toString();
+		} else {
+			throw new CRMException(CRMExceptionEnum.LOGIN_LOSE_EFFICACY_ERROR);
+		}
+	}
+
 }

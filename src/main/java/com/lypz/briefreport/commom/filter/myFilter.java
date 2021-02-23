@@ -69,7 +69,8 @@ public class myFilter implements Filter {
 				.setAttribute("userId", request.getHeader("userId"));
 		// request.getSession().setAttribute("userUUId",
 		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
-		request.getSession().setAttribute("code", request.getHeader("code"));
+		request.getSession()
+				.setAttribute("code", request.getHeader("deptCode"));
 		// CookieUtils.setCookie("userId", "1", response);
 		// CookieUtils.setCookie("userId",
 		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b",

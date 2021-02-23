@@ -42,7 +42,7 @@ public class InitServiceImpl implements InitService {
 		Map map = new HashMap();
 		map.put("userId", 1);
 		map.put("userUUId", 1);
-		map.put("deptCode", "001001001");
+		map.put("deptCode", "001001");
 		return ResultUtil.success(map);
 	}
 }

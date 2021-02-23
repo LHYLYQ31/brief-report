@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lypz.briefreport.commom.constant.Constant;
 import com.lypz.briefreport.commom.utils.LoginUtil;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
@@ -52,7 +53,10 @@ public class BriefreportController {
 	@ResponseBody
 	public Result<?> page(BriefReportPo po, HttpServletRequest request,
 			HttpServletResponse respo) {
-		po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		String deptCode = LoginUtil.getDeptCode(request);
+		if (deptCode.length() >= Constant.COUNTY_CODE_LENGTH) {
+			po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		}
 		return briefReportService.page(po);
 
 	}
