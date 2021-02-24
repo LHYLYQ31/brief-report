@@ -54,8 +54,21 @@ public class BriefreportController {
 	public Result<?> page(BriefReportPo po, HttpServletRequest request,
 			HttpServletResponse respo) {
 		String deptCode = LoginUtil.getDeptCode(request);
-		if (deptCode.length() >= Constant.COUNTY_CODE_LENGTH) {
-			po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		if (po.getUnitType() == null || po.getUnitType() == 0) {// 擦报送条件
+			if ((StringUtils.isNotBlank(deptCode) && deptCode.length() >= Constant.COUNTY_CODE_LENGTH)
+					|| po.getBrStatus() == 2) {
+				po.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+
+			} else {
+				po.setUserId(null);
+			}
+		}
+		// 查反本部门
+		if (po.getUnitType() != null && po.getUnitType() != 0
+				&& po.getUnitType() == 1) {// 查询本单位 需要根据uuid 查询
+			po.setUseUnit(LoginUtil.getDeptNameByCode(request));
+		} else {
+			po.setUseUnit(null);
 		}
 		return briefReportService.page(po);
 

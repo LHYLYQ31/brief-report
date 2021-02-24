@@ -40,9 +40,11 @@ public class InitServiceImpl implements InitService {
 		// response);
 		// CookieUtils.setCookie("code", "001001", response);
 		Map map = new HashMap();
-		map.put("userId", 1);
-		map.put("userUUId", 1);
+		map.put("userId", 2);
+		map.put("userUUId", 2);
 		map.put("deptCode", "001001");
+		map.put("organizationName", "1111");
+
 		return ResultUtil.success(map);
 	}
 }

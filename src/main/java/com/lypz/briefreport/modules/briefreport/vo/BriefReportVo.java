@@ -25,7 +25,7 @@ public class BriefReportVo {
 
 	private String title;
 
-	private String unit;
+	private String useUnit;
 
 	private String author;
 
@@ -142,21 +142,21 @@ public class BriefReportVo {
 	}
 
 	/**
-	 * <B>取得：</B>unit<BR>
+	 * <B>取得：</B>useUnit<BR>
 	 * 
 	 * @return String
 	 */
-	public String getUnit() {
-		return unit;
+	public String getUseUnit() {
+		return useUnit;
 	}
 
 	/**
-	 * <B>设定：</B>unit<BR>
+	 * <B>设定：</B>useUnit<BR>
 	 * 
-	 * @param unit
+	 * @param useUnit
 	 */
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public void setUseUnit(String useUnit) {
+		this.useUnit = useUnit;
 	}
 
 	/**

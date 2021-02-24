@@ -71,6 +71,9 @@ public class myFilter implements Filter {
 		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b");
 		request.getSession()
 				.setAttribute("code", request.getHeader("deptCode"));
+
+		request.getSession().setAttribute("organizationName",
+				request.getHeader("organizationName"));
 		// CookieUtils.setCookie("userId", "1", response);
 		// CookieUtils.setCookie("userId",
 		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b",
