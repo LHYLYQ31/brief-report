@@ -47,6 +47,45 @@ public class BriefReport {
 	private String reviewer;
 
 	private String lssuer;
+	private String userName;
+	// 上报单位
+	private String userUnit;
+
+	/**
+	 * <B>取得：</B>userUnit<BR>
+	 * 
+	 * @return String
+	 */
+	public String getUserUnit() {
+		return userUnit;
+	}
+
+	/**
+	 * <B>设定：</B>userUnit<BR>
+	 * 
+	 * @param userUnit
+	 */
+	public void setUserUnit(String userUnit) {
+		this.userUnit = userUnit;
+	}
+
+	/**
+	 * <B>取得：</B>userName<BR>
+	 * 
+	 * @return String
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * <B>设定：</B>userName<BR>
+	 * 
+	 * @param userName
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public Integer getId() {
 		return id;

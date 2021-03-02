@@ -102,10 +102,10 @@ public class BriefReportServiceImpl implements BriefReportService {
 	@Override
 	public Result<?> page(BriefReportPo po) {
 
-		PageHelper.startPage(po.getPageNum(), po.getPageSize());
+		PageHelper.startPage(po.getPage(), po.getLimit());
 		List<BriefReport> list = briefReportMapper.page(po);
-		PageInfo<BriefReportVo> pageInfo = new PageInfo<BriefReportVo>(
-				formPageDate(list));
+		PageInfo pageInfo = new PageInfo(list);
+		pageInfo.setList(formPageDate(pageInfo.getList()));
 		return ResultUtil.success(pageInfo);
 
 	}
@@ -207,7 +207,7 @@ public class BriefReportServiceImpl implements BriefReportService {
 	 */
 	@Override
 	public Result<?> reportPage(ReportPagePo po) {
-		PageHelper.startPage(po.getPageNum(), po.getPageSize());
+		PageHelper.startPage(po.getPage(), po.getLimit());
 		List<ReportPageVo> list = briefReportMapper.reportPage(po);
 		PageInfo<ReportPageVo> pageInfo = new PageInfo<ReportPageVo>(list);
 		return ResultUtil.success(pageInfo);

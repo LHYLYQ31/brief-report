@@ -9,6 +9,8 @@
 		<result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
 		<result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_unit" property="userUnit" jdbcType="VARCHAR" />
 		<result column="br_status" property="brStatus" jdbcType="INTEGER" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="content" property="content" jdbcType="VARCHAR" />
@@ -51,7 +53,7 @@
 		contact_information, informatio_type,
 		is_order_manuscript,
 		submit_type,
-		use_unit, score, reviewer, lssuer
+		use_unit, score, reviewer, lssuer,user_name,user_unit
 	</sql>
 	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -129,25 +131,65 @@
 	<!-- 统计分页 -->
 	<select id="reportPage" resultMap="ReportBaseResultMap"
 		parameterType="com.lypz.briefreport.modules.briefreport.po.ReportPagePo">
-		<!-- select temp.*,floor(temp.adopt_number/temp.sub_number*100) as adopt_ratio 
-			from ( select ly_br_2.sub_count as sub_number , use_unit as department, ly_br_1.use_count 
-			as adopt_number from ly_brief_report ly_br LEFT JOIN(select COUNT(id) as 
-			use_count, use_unit as temp_use_unit from ly_brief_report where is_deleted=1 
-			and use_status=1 <if test="startTime !=null and startTime !='' and endTime 
-			!=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') 
-			and STR_TO_DATE(#{endTime},'%Y-%m-%d') </if> GROUP BY use_unit)ly_br_1 on 
-			ly_br_1.temp_use_unit=ly_br.use_unit LEFT JOIN(select COUNT(id) as sub_count, 
-			use_unit as temp_use_unit from ly_brief_report where is_deleted=1 and br_status=1 
-			<if test="startTime !=null and startTime !='' and endTime !=null and endTime 
-			!=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d') 
-			</if> GROUP BY use_unit)ly_br_2 on ly_br_2.temp_use_unit=ly_br.use_unit where 
-			ly_br.is_deleted=1 <if test="startTime !=null and startTime !='' and endTime 
-			!=null and endTime !=''"> and ly_br.created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') 
-			and STR_TO_DATE(#{endTime},'%Y-%m-%d') </if> GROUP BY ly_br.use_unit order 
-			by ly_br.id desc ) temp -->
-
-
 		SELECT
+	temp.*, IFNULL(
+		floor(
+			temp.adopt_number / temp.sub_number * 100
+		),
+		0
+	) AS adopt_ratio
+FROM
+	(
+		SELECT
+			IFNULL(ly_br_2.sub_count, 0) AS sub_number,
+			ly_br.user_unit AS department,
+			IFNULL(ly_br_1.use_count, 0) AS adopt_number
+		FROM
+			ly_brief_report ly_br
+		LEFT JOIN (
+			SELECT
+				IFNULL(COUNT(id), 0) AS use_count,
+				user_unit AS temp_unit
+			FROM
+				ly_brief_report
+			WHERE
+				is_deleted = 1
+			AND use_status = 1
+			AND br_status = 1
+				<if
+			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and
+			STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
+			GROUP BY
+				user_unit
+		) ly_br_1 ON ly_br_1.temp_unit = ly_br.user_unit
+		LEFT JOIN (
+			SELECT
+				COUNT(id) AS sub_count,
+				user_unit AS temp_unit
+			FROM
+				ly_brief_report
+			WHERE
+				is_deleted = 1
+			AND br_status = 1
+			<if
+			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and
+			STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
+			GROUP BY
+				unit
+		) ly_br_2 ON ly_br_2.temp_unit = ly_br.user_unit
+		WHERE
+			ly_br.is_deleted = 1
+			<if
+			test="startTime !=null and startTime !='' and endTime !=null and endTime !=''"> and created_at BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and
+			STR_TO_DATE(#{endTime},'%Y-%m-%d') </if>
+		GROUP BY
+			ly_br.user_unit
+		ORDER BY
+			ly_br.id DESC
+	) temp
+
+
+	<!-- 	SELECT
 		temp.*, IFNULL(floor(
 		temp.adopt_number / temp.sub_number * 100
 		),0) AS adopt_ratio
@@ -199,7 +241,7 @@
 		ly_br.unit
 		ORDER BY
 		ly_br.id DESC
-		) temp
+		) temp -->
 
 	</select>
 
@@ -265,6 +307,12 @@
 			<if test="lssuer != null">
 				lssuer,
 			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="userUnit != null">
+				user_unit,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="createdAt != null">
@@ -323,6 +371,12 @@
 			</if>
 			<if test="lssuer != null">
 				#{lssuer,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userUnit != null">
+				#{userUnit,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -388,6 +442,12 @@
 			</if>
 			<if test="lssuer != null">
 				lssuer = #{lssuer,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userUnit != null">
+				user_unit = #{userUnit,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}

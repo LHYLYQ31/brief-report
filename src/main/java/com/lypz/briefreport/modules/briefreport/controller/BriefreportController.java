@@ -109,6 +109,8 @@ public class BriefreportController {
 	public Result<?> saveBriefReport(BriefReportSavePo record,
 			HttpServletRequest request) {
 		record.setUserId(Integer.parseInt(LoginUtil.getLoginUserId(request)));
+		record.setUserName(LoginUtil.getLoginName(request));
+		record.setUserUnit(LoginUtil.getDeptNameByCode(request));
 		return briefReportService.save(record);
 	}
 

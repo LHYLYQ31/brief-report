@@ -38,17 +38,7 @@ public class LoginUtil {
 	}
 
 	public static String getDeptNameByCode(HttpServletRequest request) {
-		// String result =
-		// HttpUtil.get(Constant.CODE_URRL+"?code="+code+"&name="+username);
-		// String name = "";
-		// if (StringUtils.isNotBlank(result)) {
-		// JSONObject json = new JSONObject(result);
-		// if (json.containsKey("name")) {
-		// name = json.getStr("name");
-		// }
-		// }
-		//
-		// return name;
+
 		Object organizationName = request.getSession().getAttribute(
 				"organizationName");
 		if (organizationName != null) {
@@ -56,6 +46,12 @@ public class LoginUtil {
 		} else {
 			throw new CRMException(CRMExceptionEnum.LOGIN_LOSE_EFFICACY_ERROR);
 		}
+	}
+
+	public static String getLoginName(HttpServletRequest request) {
+
+		return request.getSession().getAttribute("loginName").toString();
+
 	}
 
 }

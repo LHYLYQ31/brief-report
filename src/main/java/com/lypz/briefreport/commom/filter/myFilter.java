@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URLDecoder;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -74,6 +75,11 @@ public class myFilter implements Filter {
 
 		request.getSession().setAttribute("organizationName",
 				request.getHeader("organizationName"));
+
+		request.getSession().setAttribute(
+				"loginName",
+				request.getHeader("loginName") == null ? "" : URLDecoder
+						.decode(request.getHeader("loginName").toString()));
 		// CookieUtils.setCookie("userId", "1", response);
 		// CookieUtils.setCookie("userId",
 		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b",

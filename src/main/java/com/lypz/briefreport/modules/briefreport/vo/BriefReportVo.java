@@ -25,9 +25,9 @@ public class BriefReportVo {
 
 	private String title;
 
-	private String useUnit;
+	private String userUnit;
 
-	private String author;
+	private String userName;
 
 	private String informatioType;
 
@@ -142,39 +142,39 @@ public class BriefReportVo {
 	}
 
 	/**
-	 * <B>取得：</B>useUnit<BR>
+	 * <B>取得：</B>userUnit<BR>
 	 * 
 	 * @return String
 	 */
-	public String getUseUnit() {
-		return useUnit;
+	public String getUserUnit() {
+		return userUnit;
 	}
 
 	/**
-	 * <B>设定：</B>useUnit<BR>
+	 * <B>设定：</B>userUnit<BR>
 	 * 
-	 * @param useUnit
+	 * @param userUnit
 	 */
-	public void setUseUnit(String useUnit) {
-		this.useUnit = useUnit;
+	public void setUserUnit(String userUnit) {
+		this.userUnit = userUnit;
 	}
 
 	/**
-	 * <B>取得：</B>author<BR>
+	 * <B>取得：</B>userName<BR>
 	 * 
 	 * @return String
 	 */
-	public String getAuthor() {
-		return author;
+	public String getUserName() {
+		return userName;
 	}
 
 	/**
-	 * <B>设定：</B>author<BR>
+	 * <B>设定：</B>userName<BR>
 	 * 
-	 * @param author
+	 * @param userName
 	 */
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

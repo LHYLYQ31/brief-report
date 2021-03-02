@@ -85,16 +85,18 @@ public class AttachmentServiceImpl implements AttachmentService {
 		Attachment satt = attachmentMapper.selectById(id);
 		Integer autherId = null;
 		if (satt != null) {
-			if (satt.getBusinessType() == 1) {
-				BriefReport sbr = briefReportMapper.selectById(Integer
-						.parseInt(satt.getBusinessId()));
-				if (sbr != null) {
-					autherId = sbr.getUserId();
-				}
+			if (StringUtils.isNotBlank(satt.getBusinessId())) {
+				if (satt.getBusinessType() == 1) {
+					BriefReport sbr = briefReportMapper.selectById(Integer
+							.parseInt(satt.getBusinessId()));
+					if (sbr != null) {
+						autherId = sbr.getUserId();
+					}
 
-			}
-			if (!userId.equals(autherId)) {
-				throw new CRMException(CRMExceptionEnum.NO_POWER_ERROR);
+				}
+				if (!userId.equals(autherId)) {
+					throw new CRMException(CRMExceptionEnum.NO_POWER_ERROR);
+				}
 			}
 
 		}
@@ -114,8 +116,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 	public Result upload(MultipartFile[] files, Integer businessType,
 			String businessId) throws Exception {
 		try {
-			;
-
 			if (files == null || businessType == null) {
 				throw new CRMException(CRMExceptionEnum.PARAM_EMPTY);
 			}

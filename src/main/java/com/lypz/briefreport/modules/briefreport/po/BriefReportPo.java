@@ -3,7 +3,7 @@
  */
 package com.lypz.briefreport.modules.briefreport.po;
 
-import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 
 import com.lypz.briefreport.modules.briefreport.model.BriefReport;
 
@@ -18,9 +18,9 @@ import com.lypz.briefreport.modules.briefreport.model.BriefReport;
  */
 public class BriefReportPo extends BriefReport {
 
-	private Integer pageNum;
+	private Integer page;
 
-	private Integer pageSize;
+	private Integer limit;
 	// 1 本单位 2 全部单位
 	private Integer unitType;
 	private String endTime;
@@ -101,39 +101,39 @@ public class BriefReportPo extends BriefReport {
 	}
 
 	/**
-	 * <B>取得：</B>pageNum<BR>
+	 * <B>取得：</B>page<BR>
 	 * 
 	 * @return Integer
 	 */
-	public Integer getPageNum() {
-		return pageNum;
+	public Integer getPage() {
+		return page;
 	}
 
 	/**
-	 * <B>设定：</B>pageNum<BR>
+	 * <B>设定：</B>page<BR>
 	 * 
-	 * @param pageNum
+	 * @param page
 	 */
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
+	public void setPage(Integer page) {
+		this.page = page;
 	}
 
 	/**
-	 * <B>取得：</B>pageSize<BR>
+	 * <B>取得：</B>limit<BR>
 	 * 
 	 * @return Integer
 	 */
-	public Integer getPageSize() {
-		return pageSize;
+	public Integer getLimit() {
+		return limit;
 	}
 
 	/**
-	 * <B>设定：</B>pageSize<BR>
+	 * <B>设定：</B>limit<BR>
 	 * 
-	 * @param pageSize
+	 * @param limit
 	 */
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public void setLimit(Integer limit) {
+		this.limit = limit;
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class BriefReportPo extends BriefReport {
 	 */
 	@Override
 	public String toString() {
-		return new JSONObject(this).toString();
+		return JSONUtil.toJsonStr(this);
 	}
 
 }

@@ -3,16 +3,17 @@
  */
 package com.lypz.briefreport.modules.init.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.lypz.briefreport.commom.handle.CRMException;
+import com.lypz.briefreport.commom.handle.CRMExceptionEnum;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
+import com.lypz.briefreport.modules.init.model.User;
 
 /**
  * <B>系统名称：</B><BR>
@@ -25,6 +26,7 @@ import com.lypz.briefreport.commom.utils.ResultUtil;
  */
 @Service
 public class InitServiceImpl implements InitService {
+	User user;
 
 	@Override
 	public Result<?> init(HttpServletRequest request,
@@ -39,12 +41,28 @@ public class InitServiceImpl implements InitService {
 		// "de95fd45-9ab6-4a9a-8dc4-c526e3285e5b",
 		// response);
 		// CookieUtils.setCookie("code", "001001", response);
-		Map map = new HashMap();
-		map.put("userId", 2);
-		map.put("userUUId", 2);
-		map.put("deptCode", "001001");
-		map.put("organizationName", "1111");
+		// User
+		// Map map = new HashMap();
+		// map.put("userId", 2);
+		// map.put("userUUId", 2);
+		// map.put("deptCode", "001001");
+		// map.put("organizationName", "1111");
+		if (user == null) {
+			user = new User();
+		}
+		return ResultUtil.success(user);
+	}
 
-		return ResultUtil.success(map);
+	@Override
+	public Result<?> setUser(User user) {
+		if (user.getUserId() != null
+				&& StringUtils.isNotBlank(user.getDeptCode())
+				&& StringUtils.isNotBlank(user.getLoginName())
+				&& StringUtils.isNotBlank(user.getOrganizationName())) {
+			this.user = user;
+		} else {
+			throw new CRMException(CRMExceptionEnum.PARAM_EMPTY);
+		}
+		return ResultUtil.success(user);
 	}
 }
