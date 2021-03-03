@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.lypz.briefreport.commom.utils.Result;
-import com.lypz.briefreport.modules.init.model.User;
 
 /**
  * <B>系统名称：</B><BR>
@@ -22,5 +21,5 @@ public interface InitService {
 	public Result<?> init(HttpServletRequest request,
 			HttpServletResponse response);
 
-	public Result<?> setUser(User user);
+	public Result<?> setUser(Integer type);
 }

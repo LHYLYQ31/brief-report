@@ -73,8 +73,11 @@ public class myFilter implements Filter {
 		request.getSession()
 				.setAttribute("code", request.getHeader("deptCode"));
 
-		request.getSession().setAttribute("organizationName",
-				request.getHeader("organizationName"));
+		request.getSession().setAttribute(
+				"organizationName",
+				request.getHeader("organizationName") == null ? "" : URLDecoder
+						.decode(request.getHeader("organizationName")
+								.toString()));
 
 		request.getSession().setAttribute(
 				"loginName",

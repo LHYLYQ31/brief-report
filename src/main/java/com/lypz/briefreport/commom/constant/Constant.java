@@ -46,11 +46,11 @@ public class Constant {
 	/**
 	 * 县市 code 的长度
 	 */
-	public static final int COUNTY_CODE_LENGTH = 9;
+	public static final int COUNTY_CODE_LENGTH = 4;
 	/**
 	 * 区code 长度
 	 */
-	public static final int AREA_CODE_LENGTH = 6;
+	public static final int AREA_CODE_LENGTH = 3;
 
 	public static final String CODE_URRL = "http://113.12.195.56:8003/facd-platform/common/selectUserByCode";
 

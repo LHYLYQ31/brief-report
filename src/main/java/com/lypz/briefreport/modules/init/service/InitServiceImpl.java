@@ -6,11 +6,8 @@ package com.lypz.briefreport.modules.init.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.lypz.briefreport.commom.handle.CRMException;
-import com.lypz.briefreport.commom.handle.CRMExceptionEnum;
 import com.lypz.briefreport.commom.utils.Result;
 import com.lypz.briefreport.commom.utils.ResultUtil;
 import com.lypz.briefreport.modules.init.model.User;
@@ -54,14 +51,16 @@ public class InitServiceImpl implements InitService {
 	}
 
 	@Override
-	public Result<?> setUser(User user) {
-		if (user.getUserId() != null
-				&& StringUtils.isNotBlank(user.getDeptCode())
-				&& StringUtils.isNotBlank(user.getLoginName())
-				&& StringUtils.isNotBlank(user.getOrganizationName())) {
-			this.user = user;
+	public Result<?> setUser(Integer type) {
+		if (type == null || type == 0 || type == 1) {
+			user = new User();
 		} else {
-			throw new CRMException(CRMExceptionEnum.PARAM_EMPTY);
+			User user1 = new User();
+			user1.setUserId(1);
+			user1.setDeptCode("001001");
+			user1.setOrganizationName("1的部门名称");
+			user1.setLoginName("1的用户名");
+			user = user1;
 		}
 		return ResultUtil.success(user);
 	}

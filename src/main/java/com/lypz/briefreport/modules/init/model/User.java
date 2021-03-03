@@ -3,6 +3,8 @@
  */
 package com.lypz.briefreport.modules.init.model;
 
+import java.net.URLEncoder;
+
 /**
  * <B>系统名称：</B><BR>
  * <B>模块名称：</B><BR>
@@ -15,8 +17,8 @@ package com.lypz.briefreport.modules.init.model;
 public class User {
 	private Integer userId = 2;
 	private String loginName = "登录用户";
-	private String deptCode = "001001";
-	private String organizationName = "1111";
+	private String deptCode = "001";
+	private String organizationName = "2的组织部门";
 
 	/**
 	 * <B>取得：</B>loginName<BR>
@@ -24,7 +26,7 @@ public class User {
 	 * @return String
 	 */
 	public String getLoginName() {
-		return java.net.URLEncoder.encode(loginName);
+		return URLEncoder.encode(loginName);
 	}
 
 	/**
@@ -36,11 +38,6 @@ public class User {
 		this.loginName = loginName;
 	}
 
-	/**
-	 * <B>取得：</B>userId<BR>
-	 * 
-	 * @return Integer
-	 */
 	public Integer getUserId() {
 		return userId;
 	}
@@ -78,7 +75,7 @@ public class User {
 	 * @return String
 	 */
 	public String getOrganizationName() {
-		return organizationName;
+		return URLEncoder.encode(organizationName);
 	}
 
 	/**

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lypz.briefreport.commom.utils.Result;
-import com.lypz.briefreport.modules.init.model.User;
 import com.lypz.briefreport.modules.init.service.InitService;
 
 /**
@@ -36,7 +35,7 @@ public class InitController {
 	}
 
 	@RequestMapping("setUser")
-	public Result<?> setUser(User user) {
-		return initService.setUser(user);
+	public Result<?> setUser(Integer type) {
+		return initService.setUser(type);
 	}
 }
